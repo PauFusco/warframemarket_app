@@ -31,36 +31,84 @@ class HomePage extends StatelessWidget {
       appBar:
           AppBar(title: const Text("Title Bar"), backgroundColor: Colors.blue),
       body: FutureBuilder(
-        future: loadWarframeItem(),
+        future: loadWarframeSet("wisp_prime"),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          final item = snapshot.data!;
+          final dataRequest = snapshot.data!;
           return Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(item.itemName),
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                    image: DecorationImage(
-                      image: NetworkImage(item.imageURL),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
-                Text(item.itemDescription),
+                Text(dataRequest.set.itemName),
+                SetPreview(setData: dataRequest),
+                Text(dataRequest.set.itemDescription, textAlign: TextAlign.center),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class SetPreview extends StatelessWidget {
+  const SetPreview({
+    super.key,
+    required this.setData,
+  });
+
+  final WarframeSetData setData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        ItemPreview(item: setData.set, width: 300, height: 300),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ItemPreview(item: setData.blueprint, width: 80, height: 80),
+            ItemPreview(item: setData.neuroptics, width: 80, height: 80),
+            ItemPreview(item: setData.chassis, width: 80, height: 80),
+            ItemPreview(item: setData.systems, width: 80, height: 80),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class ItemPreview extends StatelessWidget {
+  const ItemPreview(
+      {super.key,
+      required this.item,
+      required this.width,
+      required this.height});
+
+  final WarframeItem item;
+  final double width, height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey.shade700,
+        border: Border.all(
+          width: 3,
+          color: (item.itemName.contains("Set") ? Colors.blue : Colors.grey),
+        ),
+        image: DecorationImage(
+          image: NetworkImage(item.imageURL),
+          fit: BoxFit.fitHeight,
+        ),
       ),
     );
   }
