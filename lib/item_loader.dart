@@ -4,10 +4,12 @@ import 'package:http/http.dart' as http;
 class WarframeItem {
   String itemName;
   String itemDescription;
+  String imageURL;
 
   WarframeItem.fromJson(Map<String, dynamic> json)
-      : itemName = json["item"]["items_in_set"][0]["en"]["item_name"],
-        itemDescription = json["item"]["items_in_set"][0]["en"]["description"];
+      : itemName = json["item"]["items_in_set"][1]["en"]["item_name"],
+        itemDescription = json["item"]["items_in_set"][1]["en"]["description"],
+        imageURL = "https://warframe.market/static/assets/${json["item"]["items_in_set"][1]["en"]["icon"]}";
 }
 
 Future<WarframeItem> loadWarframeItem() async {

@@ -44,6 +44,18 @@ class HomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(item.itemName),
+                Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                    image: DecorationImage(
+                      image: NetworkImage(item.imageURL),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
                 Text(item.itemDescription),
               ],
             ),
