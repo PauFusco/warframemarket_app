@@ -17,7 +17,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      routes: {
+        "/": (_) => const HomePage(),
+      },
+      initialRoute: "/",
     );
   }
 }
@@ -28,8 +31,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text("Title Bar"), backgroundColor: Colors.blue),
+      appBar: AppBar(
+          title: const Image(
+            image: AssetImage("assets/warframe_market_logo.png"),
+            height: 60,
+          ),
+          toolbarHeight: 80,
+          backgroundColor: Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
         future: loadWarframeSet("wisp_prime"),
         builder: (context, snapshot) {
@@ -40,17 +48,54 @@ class HomePage extends StatelessWidget {
           }
           final dataRequest = snapshot.data!;
           return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                Text(dataRequest.set.itemName),
-                SetPreview(setData: dataRequest),
-                Text(dataRequest.set.itemDescription, textAlign: TextAlign.center),
+                const SarynBackground(),
+                SetInformation(dataRequest: dataRequest),
               ],
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class SarynBackground extends StatelessWidget {
+  const SarynBackground({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/saryn_background.png",
+      height: 973, //image height
+      fit: BoxFit.none,
+      color: const Color.fromARGB(100, 80, 80, 80),
+      colorBlendMode: BlendMode.srcATop,
+    );
+  }
+}
+
+class SetInformation extends StatelessWidget {
+  const SetInformation({
+    super.key,
+    required this.dataRequest,
+  });
+
+  final WarframeSetData dataRequest;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(dataRequest.set.itemName, style: const TextStyle(color: Colors.white)),
+        SetPreview(setData: dataRequest),
+        Text(dataRequest.set.itemDescription, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white)),
+      ],
     );
   }
 }
@@ -103,7 +148,9 @@ class ItemPreview extends StatelessWidget {
         color: Colors.grey.shade700,
         border: Border.all(
           width: 3,
-          color: (item.itemName.contains("Set") ? Colors.blue : Colors.grey),
+          color: (item.itemName.contains("Set")
+              ? const Color.fromARGB(255, 95, 245, 255)
+              : const Color.fromARGB(255, 92, 92, 92)),
         ),
         image: DecorationImage(
           image: NetworkImage(item.imageURL),
