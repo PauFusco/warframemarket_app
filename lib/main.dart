@@ -37,13 +37,17 @@ class HomePage extends StatelessWidget {
             height: 60,
           ),
           toolbarHeight: 80,
-          backgroundColor: Color.fromARGB(255, 74, 100, 130)),
+          backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
         future: loadWarframeSet("wisp_prime"),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Stack(
+              alignment: Alignment.center,
+              children: [
+                SarynBackground(),
+                CircularProgressIndicator(),
+              ],
             );
           }
           final dataRequest = snapshot.data!;
@@ -52,7 +56,11 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 const SarynBackground(),
-                SetInformation(dataRequest: dataRequest),
+                Column(
+                  children: [
+                    SetInformation(dataRequest: dataRequest),
+                  ],
+                ),
               ],
             ),
           );
@@ -92,9 +100,79 @@ class SetInformation extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(dataRequest.set.itemName, style: const TextStyle(color: Colors.white)),
+        ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
         SetPreview(setData: dataRequest),
-        Text(dataRequest.set.itemDescription, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white)),
+        ItemDescription(description: dataRequest.set.itemDescription),
+      ],
+    );
+  }
+}
+
+class ItemDescription extends StatelessWidget {
+  const ItemDescription({
+    super.key,
+    required this.description,
+  });
+
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border.all(color: Colors.grey.shade700, width: 6)),
+      child: Center(
+        child: Text(
+          description,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            overflow: TextOverflow.visible,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ItemTitle extends StatelessWidget {
+  const ItemTitle({
+    super.key,
+    required this.itemName,
+  });
+
+  final String itemName;
+
+  @override
+  Widget build(BuildContext context) {
+    final splitted = itemName.split("PRIME");
+
+    String setName = "${splitted[0]}PRIME";
+    String componentName = splitted[1];
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          setName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Text(
+          componentName,
+          style: const TextStyle(
+            color: Color.fromARGB(255, 27, 147, 178),
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ],
     );
   }
