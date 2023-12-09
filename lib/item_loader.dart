@@ -5,13 +5,19 @@ class WarframeItem {
   String itemName;
   String itemDescription;
   String imageURL;
+  int masteryLevel;
+  int tradingTax;
+  int ducats;
 
   WarframeItem.fromJson(Map<String, dynamic> itemJson)
       : itemName = itemJson["en"]["item_name"],
         itemDescription = itemJson["en"]["description"],
         imageURL = (!itemJson["en"]["item_name"].contains("Set")
             ? "https://warframe.market/static/assets/${itemJson["sub_icon"]}"
-            : "https://warframe.market/static/assets/${itemJson["icon"]}");
+            : "https://warframe.market/static/assets/${itemJson["icon"]}"),
+        masteryLevel = itemJson["mastery_level"],
+        tradingTax = itemJson["trading_tax"],
+        ducats = itemJson["ducats"];
 }
 
 //Not needed right now

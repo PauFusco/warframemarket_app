@@ -57,11 +57,17 @@ class HomePage extends StatelessWidget {
               children: [
                 const SarynBackground(),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    const CustomButton(
+                      text: "Wiki",
+                      textSize: 13,
+                      width: 80,
+                      height: 30,
+                      borderSize: 1.5,
+                    ),
                     SetInformation(dataRequest: dataRequest),
-                    const SizedBox(height: 20),
                     const CustomButton(text: "LISTINGS"),
-                    const SizedBox(height: 20),
                     const CustomButton(text: "SOURCES"),
                   ],
                 ),
@@ -78,32 +84,38 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
+    this.width = 250,
+    this.height = 100,
+    this.textSize = 30,
+    this.borderSize = 5,
   });
 
   final String text;
+  final double width;
+  final double height;
+  final double textSize;
+  final double borderSize;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
       style: ButtonStyle(
-        fixedSize:
-            const MaterialStatePropertyAll(Size(250, 100)),
-        backgroundColor:
-            MaterialStatePropertyAll(Colors.grey.shade600),
-        shape: const MaterialStatePropertyAll(
+        fixedSize: MaterialStatePropertyAll(Size(width, height)),
+        backgroundColor: MaterialStatePropertyAll(Colors.grey.shade600),
+        shape: MaterialStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
             side: BorderSide(
-              width: 5,
+              width: borderSize,
               color: Colors.grey,
             ),
           ),
         ),
       ),
       child: Text(text,
-          style: const TextStyle(
-              fontSize: 30,
+          style: TextStyle(
+              fontSize: textSize,
               color: Colors.grey,
               fontWeight: FontWeight.w700)),
     );
@@ -143,6 +155,77 @@ class SetInformation extends StatelessWidget {
         ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
         SetPreview(setData: dataRequest),
         ItemDescription(description: dataRequest.set.itemDescription),
+        ValuesBox(
+          masteryLevel: dataRequest.set.masteryLevel,
+          tradingTax: dataRequest.set.tradingTax,
+          ducats: dataRequest.set.ducats,
+        )
+      ],
+    );
+  }
+}
+
+class ValuesBox extends StatelessWidget {
+  const ValuesBox({
+    super.key,
+    required this.masteryLevel,
+    required this.tradingTax,
+    required this.ducats,
+  });
+
+  final int masteryLevel;
+  final int tradingTax;
+  final int ducats;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      height: 70,
+      decoration: const BoxDecoration(
+          color: Color.fromARGB(150, 139, 139, 139),
+          borderRadius: BorderRadius.all(Radius.circular(3))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ValueProperty(propertyName: "Mastery Lvl", value: masteryLevel),
+          ValueProperty(propertyName: "Trading Tax", value: tradingTax),
+          ValueProperty(propertyName: "Ducats", value: ducats),
+        ],
+      ),
+    );
+  }
+}
+
+class ValueProperty extends StatelessWidget {
+  const ValueProperty({
+    super.key,
+    required this.propertyName,
+    required this.value,
+  });
+
+  final String propertyName;
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(propertyName,
+            style: TextStyle(
+                color: Colors.grey.shade400,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                height: 0.9)),
+        Text(
+          value.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ],
     );
   }
@@ -163,7 +246,8 @@ class ItemDescription extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: Colors.grey,
-          border: Border.all(color: Colors.grey.shade700, width: 6)),
+          border: Border.all(color: Colors.grey.shade700, width: 6),
+          borderRadius: const BorderRadius.all(Radius.circular(3))),
       child: Center(
         child: Text(
           description,
