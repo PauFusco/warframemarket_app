@@ -59,6 +59,10 @@ class HomePage extends StatelessWidget {
                 Column(
                   children: [
                     SetInformation(dataRequest: dataRequest),
+                    const SizedBox(height: 20),
+                    const CustomButton(text: "LISTINGS"),
+                    const SizedBox(height: 20),
+                    const CustomButton(text: "SOURCES"),
                   ],
                 ),
               ],
@@ -66,6 +70,42 @@ class HomePage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        fixedSize:
+            const MaterialStatePropertyAll(Size(250, 100)),
+        backgroundColor:
+            MaterialStatePropertyAll(Colors.grey.shade600),
+        shape: const MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+            side: BorderSide(
+              width: 5,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+      child: Text(text,
+          style: const TextStyle(
+              fontSize: 30,
+              color: Colors.grey,
+              fontWeight: FontWeight.w700)),
     );
   }
 }
