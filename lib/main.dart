@@ -59,6 +59,7 @@ class HomePage extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
                     const CustomButton(
                       text: "Wiki",
                       textSize: 13,
@@ -66,7 +67,14 @@ class HomePage extends StatelessWidget {
                       height: 30,
                       borderSize: 1.5,
                     ),
-                    SetInformation(dataRequest: dataRequest),
+                    SetPreview(setData: dataRequest),
+                    ItemDescription(
+                        description: dataRequest.set.itemDescription),
+                    ValuesBox(
+                      masteryLevel: dataRequest.set.masteryLevel,
+                      tradingTax: dataRequest.set.tradingTax,
+                      ducats: dataRequest.set.ducats,
+                    ),
                     const CustomButton(text: "LISTINGS"),
                     const CustomButton(text: "SOURCES"),
                   ],
@@ -135,32 +143,6 @@ class SarynBackground extends StatelessWidget {
       fit: BoxFit.none,
       color: const Color.fromARGB(100, 80, 80, 80),
       colorBlendMode: BlendMode.srcATop,
-    );
-  }
-}
-
-class SetInformation extends StatelessWidget {
-  const SetInformation({
-    super.key,
-    required this.dataRequest,
-  });
-
-  final WarframeSetData dataRequest;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
-        SetPreview(setData: dataRequest),
-        ItemDescription(description: dataRequest.set.itemDescription),
-        ValuesBox(
-          masteryLevel: dataRequest.set.masteryLevel,
-          tradingTax: dataRequest.set.tradingTax,
-          ducats: dataRequest.set.ducats,
-        )
-      ],
     );
   }
 }
