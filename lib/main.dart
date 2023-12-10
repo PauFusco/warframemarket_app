@@ -25,8 +25,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int activeItem = 0;
+
+  void setActiveItem(int itemNum) {
+    setState(() {
+      activeItem = itemNum;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +81,10 @@ class HomePage extends StatelessWidget {
                       borderSize: 1.5,
                       imagePath: "assets/lotusSymbol.png",
                     ),
-                    SetPreview(setData: dataRequest),
+                    SetPreview(
+                        setData: dataRequest,
+                        selectedItem: activeItem,
+                        updateState: setActiveItem),
                     ItemDescription(
                         description: dataRequest.set.itemDescription),
                     ValuesBox(
@@ -305,9 +321,13 @@ class SetPreview extends StatelessWidget {
   const SetPreview({
     super.key,
     required this.setData,
+    required this.selectedItem,
+    this.updateState,
   });
 
   final WarframeSetData setData;
+  final int selectedItem;
+  final void Function(int)? updateState;
 
   @override
   Widget build(BuildContext context) {
@@ -315,16 +335,42 @@ class SetPreview extends StatelessWidget {
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
-        ItemPreview(item: setData.set, size: 300),
+        ItemPreview(
+          item: setData.set,
+          size: 300,
+          isActive: (selectedItem == 0),
+          updateState: updateState,
+        ),
         Positioned(
           bottom: -15,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ItemPreview(item: setData.blueprint, size: 80, opacity: 220),
-              ItemPreview(item: setData.neuroptics, size: 80, opacity: 220),
-              ItemPreview(item: setData.chassis, size: 80, opacity: 220),
-              ItemPreview(item: setData.systems, size: 80, opacity: 220),
+              ItemPreview(
+                item: setData.blueprint,
+                size: 80,
+                opacity: 220,
+                isActive: (selectedItem == 1),
+                updateState: updateState,
+              ),
+              ItemPreview(
+                  item: setData.neuroptics,
+                  size: 80,
+                  opacity: 220,
+                  isActive: (selectedItem == 2),
+                  updateState: updateState),
+              ItemPreview(
+                  item: setData.chassis,
+                  size: 80,
+                  opacity: 220,
+                  isActive: (selectedItem == 3),
+                  updateState: updateState),
+              ItemPreview(
+                  item: setData.systems,
+                  size: 80,
+                  opacity: 220,
+                  isActive: (selectedItem == 4),
+                  updateState: updateState),
             ],
           ),
         ),
@@ -339,11 +385,15 @@ class ItemPreview extends StatelessWidget {
     required this.item,
     required this.size,
     this.opacity = 255,
+    this.isActive = false,
+    this.updateState,
   });
 
   final WarframeItem item;
   final double size;
   final int opacity;
+  final bool isActive;
+  final void Function(int)? updateState;
 
   @override
   Widget build(BuildContext context) {
@@ -355,12 +405,12 @@ class ItemPreview extends StatelessWidget {
         color: Color.fromARGB(opacity, 97, 97, 97),
         border: Border.all(
           width: 3,
-          color: (item.itemName.contains("Set")
+          color: (isActive
               ? Color.fromARGB(opacity, 95, 245, 255)
               : Color.fromARGB(opacity, 92, 92, 92)),
         ),
         boxShadow: [
-          if (item.itemName.contains("Set"))
+          if (isActive)
             BoxShadow(
                 color: Color.fromARGB(opacity, 46, 113, 119),
                 blurRadius: 20,
@@ -371,6 +421,23 @@ class ItemPreview extends StatelessWidget {
           opacity: opacity.toDouble() / 255.0,
           fit: BoxFit.contain,
         ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          if (updateState != null) {
+            if (item.itemName.contains("Systems")) {
+              updateState?.call(4);
+            } else if (item.itemName.contains("Chassis")) {
+              updateState?.call(3);
+            } else if (item.itemName.contains("Neuroptics")) {
+              updateState?.call(2);
+            } else if (item.itemName.contains("Blueprint")) {
+              updateState?.call(1);
+            } else if (item.itemName.contains("Set")) {
+              updateState?.call(0);
+            }
+          }
+        },
       ),
     );
   }
