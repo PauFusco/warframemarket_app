@@ -72,7 +72,11 @@ class _HomePageState extends State<HomePage> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
+                    ItemTitle(
+                        itemName: (activeItem == 0)
+                            ? dataRequest.set.itemName.toUpperCase()
+                            : dataRequest.components[activeItem - 1].itemName
+                                .toUpperCase()),
                     const CustomButton(
                       text: "Wiki",
                       textSize: 20,
@@ -86,11 +90,20 @@ class _HomePageState extends State<HomePage> {
                         selectedItem: activeItem,
                         updateState: setActiveItem),
                     ItemDescription(
-                        description: dataRequest.set.itemDescription),
+                        description: (activeItem == 0)
+                            ? dataRequest.set.itemDescription
+                            : dataRequest
+                                .components[activeItem - 1].itemDescription),
                     ValuesBox(
-                      masteryLevel: dataRequest.set.masteryLevel,
-                      tradingTax: dataRequest.set.tradingTax,
-                      ducats: dataRequest.set.ducats,
+                      masteryLevel: (activeItem == 0)
+                          ? dataRequest.set.masteryLevel
+                          : dataRequest.components[activeItem - 1].masteryLevel,
+                      tradingTax: (activeItem == 0)
+                          ? dataRequest.set.tradingTax
+                          : dataRequest.components[activeItem - 1].tradingTax,
+                      ducats: (activeItem == 0)
+                          ? dataRequest.set.ducats
+                          : dataRequest.components[activeItem - 1].ducats,
                     ),
                     const CustomButton(text: "LISTINGS"),
                     const CustomButton(text: "SOURCES"),
@@ -293,26 +306,28 @@ class ItemTitle extends StatelessWidget {
     String setName = "${splitted[0]}PRIME";
     String componentName = splitted[1];
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          setName,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontWeight: FontWeight.w600,
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: setName,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 40,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-        Text(
-          componentName,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 27, 147, 178),
-            fontSize: 40,
-            fontWeight: FontWeight.w600,
+          TextSpan(
+            text: componentName,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 27, 147, 178),
+              fontSize: 40,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -333,31 +348,33 @@ class SetPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
-      alignment: Alignment.center,
+      alignment: Alignment.bottomCenter,
       children: [
-        ItemPreview(
-          item: setData.set,
-          size: 300,
-          isActive: (selectedItem == 0),
-          positionInList: 0,
-          updateState: updateState,
+        Column(
+          children: [
+            ItemPreview(
+              item: setData.set,
+              size: 300,
+              isActive: (selectedItem == 0),
+              positionInList: 0,
+              updateState: updateState,
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
-        Positioned(
-          bottom: -15,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int i = 0; i < setData.components.length; i++)
-                ItemPreview(
-                  item: setData.components[i],
-                  size: 80,
-                  opacity: 220,
-                  isActive: (selectedItem == i + 1),
-                  positionInList: i + 1,
-                  updateState: updateState,
-                )
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < setData.components.length; i++)
+              ItemPreview(
+                item: setData.components[i],
+                size: 80,
+                opacity: 220,
+                isActive: (selectedItem == i + 1),
+                positionInList: i + 1,
+                updateState: updateState,
+              )
+          ],
         ),
       ],
     );
