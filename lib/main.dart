@@ -62,10 +62,11 @@ class HomePage extends StatelessWidget {
                     ItemTitle(itemName: dataRequest.set.itemName.toUpperCase()),
                     const CustomButton(
                       text: "Wiki",
-                      textSize: 13,
-                      width: 80,
-                      height: 30,
+                      textSize: 20,
+                      width: 100,
+                      height: 35,
                       borderSize: 1.5,
+                      imagePath: "assets/lotusSymbol.png",
                     ),
                     SetPreview(setData: dataRequest),
                     ItemDescription(
@@ -92,17 +93,18 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    this.width = 250,
+    this.width = 300,
     this.height = 100,
-    this.textSize = 30,
+    this.textSize = 35,
     this.borderSize = 5,
+    this.imagePath,
   });
 
   final String text;
-  final double width;
-  final double height;
+  final double width, height;
   final double textSize;
   final double borderSize;
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +113,7 @@ class CustomButton extends StatelessWidget {
       style: ButtonStyle(
         fixedSize: MaterialStatePropertyAll(Size(width, height)),
         backgroundColor: MaterialStatePropertyAll(Colors.grey.shade600),
+        padding: const MaterialStatePropertyAll(EdgeInsets.all(0)),
         shape: MaterialStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
@@ -121,11 +124,25 @@ class CustomButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(text,
-          style: TextStyle(
-              fontSize: textSize,
-              color: Colors.grey,
-              fontWeight: FontWeight.w700)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (imagePath != null)
+            Row(
+              children: [
+                Image(
+                  image: AssetImage(imagePath!),
+                ),
+                SizedBox(width: 5),
+              ],
+            ),
+          Text(text,
+              style: TextStyle(
+                  fontSize: textSize,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w700)),
+        ],
+      ),
     );
   }
 }
@@ -295,17 +312,21 @@ class SetPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.bottomCenter,
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
       children: [
-        ItemPreview(item: setData.set, width: 300, height: 300),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ItemPreview(item: setData.blueprint, width: 80, height: 80),
-            ItemPreview(item: setData.neuroptics, width: 80, height: 80),
-            ItemPreview(item: setData.chassis, width: 80, height: 80),
-            ItemPreview(item: setData.systems, width: 80, height: 80),
-          ],
+        ItemPreview(item: setData.set, size: 300),
+        Positioned(
+          bottom: -15,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ItemPreview(item: setData.blueprint, size: 80, opacity: 220),
+              ItemPreview(item: setData.neuroptics, size: 80, opacity: 220),
+              ItemPreview(item: setData.chassis, size: 80, opacity: 220),
+              ItemPreview(item: setData.systems, size: 80, opacity: 220),
+            ],
+          ),
         ),
       ],
     );
@@ -313,32 +334,42 @@ class SetPreview extends StatelessWidget {
 }
 
 class ItemPreview extends StatelessWidget {
-  const ItemPreview(
-      {super.key,
-      required this.item,
-      required this.width,
-      required this.height});
+  const ItemPreview({
+    super.key,
+    required this.item,
+    required this.size,
+    this.opacity = 255,
+  });
 
   final WarframeItem item;
-  final double width, height;
+  final double size;
+  final int opacity;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.grey.shade700,
+        color: Color.fromARGB(opacity, 97, 97, 97),
         border: Border.all(
           width: 3,
           color: (item.itemName.contains("Set")
-              ? const Color.fromARGB(255, 95, 245, 255)
-              : const Color.fromARGB(255, 92, 92, 92)),
+              ? Color.fromARGB(opacity, 95, 245, 255)
+              : Color.fromARGB(opacity, 92, 92, 92)),
         ),
+        boxShadow: [
+          if (item.itemName.contains("Set"))
+            BoxShadow(
+                color: Color.fromARGB(opacity, 46, 113, 119),
+                blurRadius: 20,
+                spreadRadius: 3)
+        ],
         image: DecorationImage(
           image: NetworkImage(item.imageURL),
-          fit: BoxFit.fitHeight,
+          opacity: opacity.toDouble() / 255.0,
+          fit: BoxFit.contain,
         ),
       ),
     );
