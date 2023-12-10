@@ -77,13 +77,16 @@ class _HomePageState extends State<HomePage> {
                             ? dataRequest.set.itemName.toUpperCase()
                             : dataRequest.components[activeItem - 1].itemName
                                 .toUpperCase()),
-                    const CustomButton(
+                    CustomButton(
                       text: "Wiki",
                       textSize: 20,
                       width: 100,
                       height: 35,
                       borderSize: 1.5,
                       imagePath: "assets/lotusSymbol.png",
+                      function: () {
+                        debugPrint("Wiki Button Pressed");
+                      },
                     ),
                     SetPreview(
                         setData: dataRequest,
@@ -105,8 +108,20 @@ class _HomePageState extends State<HomePage> {
                           ? dataRequest.set.ducats
                           : dataRequest.components[activeItem - 1].ducats,
                     ),
-                    const CustomButton(text: "LISTINGS"),
-                    const CustomButton(text: "SOURCES"),
+                    CustomButton(
+                      text: "LISTINGS",
+                      function: () {
+                        debugPrint("Listings Button Pressed");
+                      },
+                    ),
+                    CustomButton(
+                      text: "SOURCES",
+                      function: (activeItem != 0)
+                          ? () {
+                              debugPrint("Sources Button Pressed");
+                            }
+                          : null,
+                    ),
                   ],
                 ),
               ],
@@ -127,6 +142,7 @@ class CustomButton extends StatelessWidget {
     this.textSize = 35,
     this.borderSize = 5,
     this.imagePath,
+    this.function,
   });
 
   final String text;
@@ -134,11 +150,12 @@ class CustomButton extends StatelessWidget {
   final double textSize;
   final double borderSize;
   final String? imagePath;
+  final VoidCallback? function;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: function,
       style: ButtonStyle(
         fixedSize: MaterialStatePropertyAll(Size(width, height)),
         backgroundColor: MaterialStatePropertyAll(Colors.grey.shade600),
@@ -148,7 +165,9 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.zero,
             side: BorderSide(
               width: borderSize,
-              color: Colors.grey,
+              color: (function != null)
+                  ? const Color.fromARGB(255, 66, 170, 175)
+                  : Colors.grey,
             ),
           ),
         ),
@@ -162,13 +181,15 @@ class CustomButton extends StatelessWidget {
                 Image(
                   image: AssetImage(imagePath!),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
               ],
             ),
           Text(text,
               style: TextStyle(
                   fontSize: textSize,
-                  color: Colors.grey,
+                  color: (function != null)
+                      ? const Color.fromARGB(255, 145, 208, 211)
+                      : Colors.grey,
                   fontWeight: FontWeight.w700)),
         ],
       ),
