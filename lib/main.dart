@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           toolbarHeight: 80,
           backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
-        future: loadWarframeSet("wisp_prime"),
+        future: loadGenericSet("wisp_prime"),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
@@ -325,7 +325,7 @@ class SetPreview extends StatelessWidget {
     this.updateState,
   });
 
-  final WarframeSetData setData;
+  final GenericSetData setData;
   final int selectedItem;
   final void Function(int)? updateState;
 
@@ -339,6 +339,7 @@ class SetPreview extends StatelessWidget {
           item: setData.set,
           size: 300,
           isActive: (selectedItem == 0),
+          positionInList: 0,
           updateState: updateState,
         ),
         Positioned(
@@ -346,31 +347,15 @@ class SetPreview extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ItemPreview(
-                item: setData.blueprint,
-                size: 80,
-                opacity: 220,
-                isActive: (selectedItem == 1),
-                updateState: updateState,
-              ),
-              ItemPreview(
-                  item: setData.neuroptics,
+              for (int i = 0; i < setData.components.length; i++)
+                ItemPreview(
+                  item: setData.components[i],
                   size: 80,
                   opacity: 220,
-                  isActive: (selectedItem == 2),
-                  updateState: updateState),
-              ItemPreview(
-                  item: setData.chassis,
-                  size: 80,
-                  opacity: 220,
-                  isActive: (selectedItem == 3),
-                  updateState: updateState),
-              ItemPreview(
-                  item: setData.systems,
-                  size: 80,
-                  opacity: 220,
-                  isActive: (selectedItem == 4),
-                  updateState: updateState),
+                  isActive: (selectedItem == i + 1),
+                  positionInList: i + 1,
+                  updateState: updateState,
+                )
             ],
           ),
         ),
@@ -386,6 +371,7 @@ class ItemPreview extends StatelessWidget {
     required this.size,
     this.opacity = 255,
     this.isActive = false,
+    this.positionInList = 0,
     this.updateState,
   });
 
@@ -393,6 +379,7 @@ class ItemPreview extends StatelessWidget {
   final double size;
   final int opacity;
   final bool isActive;
+  final int positionInList;
   final void Function(int)? updateState;
 
   @override
@@ -425,17 +412,7 @@ class ItemPreview extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           if (updateState != null) {
-            if (item.itemName.contains("Systems")) {
-              updateState?.call(4);
-            } else if (item.itemName.contains("Chassis")) {
-              updateState?.call(3);
-            } else if (item.itemName.contains("Neuroptics")) {
-              updateState?.call(2);
-            } else if (item.itemName.contains("Blueprint")) {
-              updateState?.call(1);
-            } else if (item.itemName.contains("Set")) {
-              updateState?.call(0);
-            }
+            updateState?.call(positionInList);
           }
         },
       ),

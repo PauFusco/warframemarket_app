@@ -27,6 +27,7 @@ class WarframeItem {
         ducats = itemJson["ducats"];
 }
 
+/*
 class WarframeSetData {
   WarframeItem set;
   WarframeItem blueprint;
@@ -71,4 +72,37 @@ Future<WarframeSetData> loadWarframeSet(String setName) async {
       WarframeSetData(set, blueprint, neuroptics, chassis, systems);
 
   return setData;
+}
+*/
+
+class GenericSetData {
+  WarframeItem set;
+  List<WarframeItem> components;
+
+  GenericSetData(this.set, this.components);
+}
+
+Future<GenericSetData> loadGenericSet(String setName) async {
+  final response = await http.get(
+    Uri.parse("https://api.warframe.market/v1/items/${setName}_set"),
+  );
+  final json = jsonDecode(response.body);
+
+  var jsonItemsList = json["payload"]["item"]["items_in_set"];
+
+  WarframeItem? setToAdd;
+  List<WarframeItem> componentsToAdd = [];
+
+  for (var component in jsonItemsList) {
+    if (component["url_name"].toString().contains("prime_set")) {
+      setToAdd = WarframeItem.fromJson(component);
+    } else if (component != null) {
+      componentsToAdd.add(WarframeItem.fromJson(component));
+    } else {
+      componentsToAdd.add(WarframeItem());
+    }
+  }
+  setToAdd ??= WarframeItem();
+
+  return GenericSetData(setToAdd, componentsToAdd);
 }
