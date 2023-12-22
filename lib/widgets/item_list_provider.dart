@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:warframemarket_app/model/item_loader.dart';
+import 'package:warframemarket_app/model/item_search_loader.dart';
 
 class ItemListProvider extends StatelessWidget {
   const ItemListProvider({
@@ -11,8 +11,8 @@ class ItemListProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: loadGenericSet("wisp_prime"),
-      builder: (BuildContext context, AsyncSnapshot<GenericSetData> snapshot) {
+      future: loadItemsFromFile(),
+      builder: (BuildContext context, AsyncSnapshot<List<SearchItemData>> snapshot) {
         if (snapshot.hasError) {
           return ErrorWidget(snapshot.error.toString());
         }

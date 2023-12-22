@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:warframemarket_app/model/item_search_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -15,7 +19,7 @@ class SearchScreen extends StatelessWidget {
         toolbarHeight: 80,
         backgroundColor: const Color.fromARGB(255, 74, 100, 130),
       ),
-      body: const Stack(
+      body: Stack(
         children: [
           SarynBackground(),
           Center(
@@ -28,6 +32,10 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
           ),
+          IamTesting(
+              text: (context.watch<List<SearchItemData>?>() == null)
+                  ? "Placeholder"
+                  : context.watch<List<SearchItemData>>()[0].name)
         ],
       ),
     );
