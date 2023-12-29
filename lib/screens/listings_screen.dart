@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warframemarket_app/widgets/background.dart';
 
 class ListingsScreen extends StatelessWidget {
   const ListingsScreen({super.key});
@@ -14,7 +15,9 @@ class ListingsScreen extends StatelessWidget {
         toolbarHeight: 80,
         backgroundColor: const Color.fromARGB(255, 74, 100, 130),
       ),
-      body: const Center(child: Text("Here goes the listings screen")),
+      body: const Stack(children: [
+        SarynBackground(),
+      ]),
     );
   }
 }
