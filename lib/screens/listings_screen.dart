@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_order_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
+import 'package:warframemarket_app/widgets/item_order_banner.dart';
 
 class ListingsScreen extends StatefulWidget {
   const ListingsScreen({super.key});
@@ -21,7 +22,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
           toolbarHeight: 80,
           backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
-        future: loadGenericOrder(),
+        future: loadOrderList(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
@@ -37,7 +38,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Text(dataRequest.userName),
+                const SarynBackground(),
+                Column(
+                  children: [
+                    for (var itemOrder in dataRequest.orders)
+                      ItemOrderBanner(order: itemOrder)
+                  ],
+                )
               ],
             ),
           );
