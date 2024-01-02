@@ -21,11 +21,22 @@ class SearchScreen extends StatelessWidget {
         children: [
           const SarynBackground(),
           Center(
-            child: SizedBox(
-              width: 400,
-              child: AutoCompTest(
-                dataList: context.watch<List<SearchItemData>>(),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: AutoCompTest(
+                    dataList: context.watch<List<SearchItemData>>(),
+                  ),
+                ),
+                Container(
+                  width: 65,
+                  height: 56,
+                  color: const Color.fromARGB(255, 60, 135, 156),
+                  child: const Icon(Icons.search),
+                )
+              ],
             ),
           ),
         ],
@@ -58,8 +69,67 @@ class AutoCompTest extends StatelessWidget {
         });
       },
       onSelected: (SearchItemData selection) {
-        debugPrint('You just selected ${_displayStringForOption(selection)}');
         Navigator.pushNamed(context, "/set_details", arguments: selection.url);
+      },
+      fieldViewBuilder: (BuildContext context,
+          TextEditingController textEditingController,
+          FocusNode focusNode,
+          VoidCallback onFieldSubmitted) {
+        return TextField(
+          controller: textEditingController,
+          focusNode: focusNode,
+          onSubmitted: (String value) {
+            onFieldSubmitted();
+          },
+          decoration: const InputDecoration(
+            filled: true,
+            fillColor: Color.fromARGB(255, 18, 18, 18),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(
+                color: Color.fromARGB(255, 7, 16, 19),
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              borderSide: BorderSide(
+                color: Color.fromARGB(255, 27, 177, 148),
+                width: 2,
+              ),
+            ),
+          ),
+          style: const TextStyle(color: Colors.white),
+          cursorColor: Colors.white,
+          cursorHeight: 22,
+          cursorWidth: 1,
+        );
+      },
+      optionsViewBuilder: (BuildContext context,
+          AutocompleteOnSelected<SearchItemData> onSelected,
+          Iterable<SearchItemData> options) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Material(
+            elevation: 4.0,
+            child: Container(
+              constraints: BoxConstraints(maxHeight: (options.length > 3) ? 192 : options.length * 48, maxWidth: 400),
+              color: const Color.fromARGB(255, 23, 30, 33),
+              child: ListView.builder(
+                itemCount: options.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final String option = options.elementAt(index).name;
+                  return ListTile(
+                    title: Text(option, style: const TextStyle(color: Colors.white)),
+                    onTap: () {
+                      onSelected(options.elementAt(index));
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        );
       },
     );
   }
