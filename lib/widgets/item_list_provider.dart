@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:warframemarket_app/model/item_search_loader.dart';
+import 'package:warframemarket_app/widgets/background.dart';
 
 class ItemListProvider extends StatelessWidget {
   const ItemListProvider({
@@ -12,7 +13,17 @@ class ItemListProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: loadItemsFromFile(),
-      builder: (BuildContext context, AsyncSnapshot<List<SearchItemData>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<List<SearchItemData>> snapshot) {
+        if (!snapshot.hasData) {
+          return const Stack(
+            alignment: Alignment.center,
+            children: [
+              SarynBackground(),
+              CircularProgressIndicator(),
+            ],
+          );
+        }
         if (snapshot.hasError) {
           return ErrorWidget(snapshot.error.toString());
         }
