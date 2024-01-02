@@ -36,7 +36,7 @@ class GenericSetData {
 
 Future<GenericSetData> loadGenericSet(String setName) async {
   final response = await http.get(
-    Uri.parse("https://api.warframe.market/v1/items/${setName}_set"),
+    Uri.parse("https://api.warframe.market/v1/items/${setName}"),
   );
   final json = jsonDecode(response.body);
 

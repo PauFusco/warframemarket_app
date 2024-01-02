@@ -19,23 +19,57 @@ class SearchScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          SarynBackground(),
-          const Center(
+          const SarynBackground(),
+          Center(
             child: SizedBox(
               width: 400,
-              child: TextField(
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+              child: AutoCompTest(
+                dataList: context.watch<List<SearchItemData>>(),
               ),
             ),
           ),
-          IamTesting(
-              text: (context.watch<List<SearchItemData>?>() == null)
-                  ? "Placeholder"
-                  : context.watch<List<SearchItemData>>()[0].name)
         ],
       ),
     );
   }
+}
+
+class AutoCompTest extends StatelessWidget {
+  const AutoCompTest({
+    super.key,
+    required this.dataList,
+  });
+
+  final List<SearchItemData> dataList;
+  static String _displayStringForOption(SearchItemData option) => option.name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Autocomplete<SearchItemData>(
+      displayStringForOption: _displayStringForOption,
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        if (textEditingValue.text == '') {
+          return const Iterable<SearchItemData>.empty();
+        }
+        return dataList.where((SearchItemData option) {
+          return option.name
+              .toString()
+              .startsWith(textEditingValue.text.toTitleCase());
+        });
+      },
+      onSelected: (SearchItemData selection) {
+        debugPrint('You just selected ${_displayStringForOption(selection)}');
+        Navigator.pushNamed(context, "/set_details", arguments: selection.url);
+      },
+    );
+  }
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }

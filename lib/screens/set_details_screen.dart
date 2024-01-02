@@ -25,6 +25,9 @@ class _SetDetailsScreenState extends State<SetDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String? setToLoad = ModalRoute.of(context)!.settings.arguments as String?;
+
     return Scaffold(
       appBar: AppBar(
           title: const Image(
@@ -34,7 +37,7 @@ class _SetDetailsScreenState extends State<SetDetailsScreen> {
           toolbarHeight: 80,
           backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
-        future: loadGenericSet("wisp_prime"),
+        future: loadGenericSet(setToLoad!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
