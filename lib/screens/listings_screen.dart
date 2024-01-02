@@ -13,6 +13,9 @@ class ListingsScreen extends StatefulWidget {
 class _ListingsScreenState extends State<ListingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final String? setToLoad =
+        ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       appBar: AppBar(
           title: const Image(
@@ -22,7 +25,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
           toolbarHeight: 80,
           backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
-        future: loadOrderList(),
+        future: loadAllOrderLists(
+          setToLoad!.toLowerCase().replaceAll(" ", "_"),
+        ),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
@@ -39,11 +44,20 @@ class _ListingsScreenState extends State<ListingsScreen> {
               alignment: Alignment.center,
               children: [
                 const SarynBackground(),
-                Column(
-                  children: [
-                    for (var itemOrder in dataRequest.orders)
-                      ItemOrderBanner(order: itemOrder)
-                  ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < dataRequest.sellOrders.length; i++)
+                        if (dataRequest.sellOrders[i].visible)
+                          ItemOrderBanner(
+                            order: dataRequest.sellOrders[i],
+                            width: screenSize.width,
+                            backColor: i % 2.0 == 0.0
+                                ? const Color.fromARGB(250, 23, 30, 33)
+                                : const Color.fromARGB(250, 16, 22, 25),
+                          )
+                    ],
+                  ),
                 )
               ],
             ),

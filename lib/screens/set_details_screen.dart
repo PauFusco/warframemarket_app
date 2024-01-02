@@ -25,9 +25,8 @@ class _SetDetailsScreenState extends State<SetDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final String? setToLoad = ModalRoute.of(context)!.settings.arguments as String?;
-
+    final String? setToLoad =
+        ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       appBar: AppBar(
           title: const Image(
@@ -96,7 +95,11 @@ class _SetDetailsScreenState extends State<SetDetailsScreen> {
                     CustomButton(
                       text: "LISTINGS",
                       function: () {
-                        Navigator.pushNamed(context, "/listings");
+                        Navigator.pushNamed(context, "/listings",
+                            arguments: (activeItem == 0)
+                                ? dataRequest.set.itemName
+                                : dataRequest
+                                    .components[activeItem - 1].itemName);
                       },
                     ),
                     CustomButton(
