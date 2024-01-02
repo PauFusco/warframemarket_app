@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:warframemarket_app/model/item_search_loader.dart';
@@ -22,7 +20,7 @@ class SearchScreen extends StatelessWidget {
       body: Stack(
         children: [
           SarynBackground(),
-          Center(
+          const Center(
             child: SizedBox(
               width: 400,
               child: TextField(

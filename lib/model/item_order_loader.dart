@@ -26,17 +26,19 @@ class ItemOrder {
   ItemOrder.fromJson(Map<String, dynamic> orderJson)
       : quantity = orderJson["quantity"],
         price = orderJson["platinum"],
-        orderType = orderJson["order_type"],
-        orderVisibility = orderJson["visible"],
+        orderType =
+            orderJson["order_type"] == "sell" ? OrderType.sell : OrderType.buy,
+        orderVisibility = orderJson["visible"] == "true"
+            ? OrderVisibility.visible
+            : OrderVisibility.invisible,
         userName = orderJson["user"]["ingame_name"],
         userRegion = orderJson["user"]["region"],
         userStatus = orderJson["user"]["status"];
 }
 
-Future<ItemOrder> loadGenericOrder(String itemSetToCheck) async {
+Future<ItemOrder> loadGenericOrder() async {
   final response = await http.get(
-    Uri.parse(
-        "https://api.warframe.market/v1/items/${itemSetToCheck}_set/orders"),
+    Uri.parse("https://api.warframe.market/v1/items/wisp_prime_set/orders"),
   );
 
   final json = jsonDecode(response.body);

@@ -1,23 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:warframemarket_app/model/item_order_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 
-class ListingsScreen extends StatelessWidget {
+class ListingsScreen extends StatefulWidget {
   const ListingsScreen({super.key});
 
+  @override
+  State<ListingsScreen> createState() => _ListingsScreenState();
+}
+
+class _ListingsScreenState extends State<ListingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Image(
-          image: AssetImage("assets/warframe_market_logo.png"),
-          height: 60,
-        ),
-        toolbarHeight: 80,
-        backgroundColor: const Color.fromARGB(255, 74, 100, 130),
+          title: const Image(
+            image: AssetImage("assets/warframe_market_logo.png"),
+            height: 60,
+          ),
+          toolbarHeight: 80,
+          backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
+      body: FutureBuilder(
+        future: loadGenericOrder(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Stack(
+              alignment: Alignment.center,
+              children: [
+                SarynBackground(),
+                CircularProgressIndicator(),
+              ],
+            );
+          }
+          final dataRequest = snapshot.data!;
+          return Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Text(dataRequest.userName),
+              ],
+            ),
+          );
+        },
       ),
-      body: const Stack(children: [
-        SarynBackground(),
-      ]),
     );
   }
 }
