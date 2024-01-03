@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_order_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 import 'package:warframemarket_app/widgets/buy_sell_button.dart';
-import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_order_banner.dart';
 
 class ListingsScreen extends StatefulWidget {
@@ -24,7 +23,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final String? setToLoad =
+    final String? itemToLoad =
         ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +36,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       ),
       body: FutureBuilder(
         future: loadAllOrderLists(
-          setToLoad!.toLowerCase().replaceAll(" ", "_"),
+          itemToLoad!.toLowerCase().replaceAll(" ", "_"),
         ),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
