@@ -17,48 +17,81 @@ class ItemOrderBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: backColor,
-      height: 70,
       width: width,
-      child: Row(
-        children: [
-          Container(
-            width: 50,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(order.userImageURL),
-                opacity: 255.00,
-                fit: BoxFit.contain,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: NetworkImage(order.userImageURL),
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Container(
+              width: 100,
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    order.userName,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      color: Color.fromARGB(255, 48, 105, 121),
+                      decorationColor: Color.fromARGB(255, 48, 105, 121),
+                    ),
+                  ),
+                  Text(
+                    order.userStatus,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 137, 149, 153),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            Row(
               children: [
-                Text(
-                  order.userName,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 48, 105, 121),
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color.fromARGB(255, 48, 105, 121),
+                Container(
+                  alignment: Alignment.center,
+                  width: 40,
+                  child: Text(
+                    order.quantity.toString(),
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 113, 118, 118),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  order.userStatus,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 137, 149, 153),
-                    fontSize: 12,
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: 90,
+                  child: Text(
+                    order.price.toString(),
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 193, 71, 151),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,14 @@ class ListingsScreen extends StatefulWidget {
 }
 
 class _ListingsScreenState extends State<ListingsScreen> {
+  int activeTab = 0;
+
+  void setActiveItem(int num) {
+    setState(() {
+      activeTab = num;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -43,7 +51,6 @@ class _ListingsScreenState extends State<ListingsScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                const SarynBackground(),
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -53,8 +60,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             order: dataRequest.sellOrders[i],
                             width: screenSize.width,
                             backColor: i % 2.0 == 0.0
-                                ? const Color.fromARGB(250, 23, 30, 33)
-                                : const Color.fromARGB(250, 16, 22, 25),
+                                ? const Color.fromARGB(255, 23, 30, 33)
+                                : const Color.fromARGB(255, 16, 22, 25),
                           )
                     ],
                   ),

@@ -11,26 +11,6 @@ class ItemOrder {
   String userRegion;
   String userStatus;
 
-  @override
-  int compareTo(ItemOrder other) {
-    if (userStatus == "ingame") {
-      if (other.userStatus == "ingame") return 0;
-      if (other.userStatus == "online") return 1;
-      if (other.userStatus == "offline") return 1;
-    }
-    if (userStatus == "online") {
-      if (other.userStatus == "ingame") return -1;
-      if (other.userStatus == "online") return 0;
-      if (other.userStatus == "offline") return 1;
-    }
-    if (userStatus == "offline") {
-      if (other.userStatus == "ingame") return -1;
-      if (other.userStatus == "online") return -1;
-      if (other.userStatus == "offline") return 0;
-    }
-    return 0;
-  }
-
   ItemOrder()
       : quantity = -1,
         price = -1,
