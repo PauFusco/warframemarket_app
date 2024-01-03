@@ -4,7 +4,7 @@ import 'package:warframemarket_app/model/game_object_loader.dart';
 class ItemPreview extends StatelessWidget {
   const ItemPreview({
     super.key,
-    required this.item,
+    required this.itemURL,
     required this.size,
     this.opacity = 255,
     this.isActive = false,
@@ -12,7 +12,7 @@ class ItemPreview extends StatelessWidget {
     this.updateState,
   });
 
-  final SetItem item;
+  final String itemURL;
   final double size;
   final int opacity;
   final bool isActive;
@@ -41,7 +41,7 @@ class ItemPreview extends StatelessWidget {
                 spreadRadius: 3)
         ],
         image: DecorationImage(
-          image: NetworkImage(item.imageURL),
+          image: NetworkImage(itemURL),
           opacity: opacity.toDouble() / 255.0,
           fit: BoxFit.contain,
         ),

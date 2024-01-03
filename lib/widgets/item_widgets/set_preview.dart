@@ -23,7 +23,7 @@ class SetPreview extends StatelessWidget {
         Column(
           children: [
             ItemPreview(
-              item: setData.set,
+              itemURL: setData.set.imageURL,
               size: 300,
               isActive: (selectedItem == 0),
               positionInList: 0,
@@ -37,7 +37,7 @@ class SetPreview extends StatelessWidget {
           children: [
             for (int i = 0; i < setData.components.length; i++)
               ItemPreview(
-                item: setData.components[i],
+                itemURL: setData.components[i].imageURL,
                 size: 80,
                 opacity: 220,
                 isActive: (selectedItem == i + 1),

@@ -3,6 +3,7 @@ import 'package:warframemarket_app/model/game_object_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_description.dart';
+import 'package:warframemarket_app/widgets/item_widgets/item_preview.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_title.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_values_box.dart';
 import 'package:warframemarket_app/widgets/item_widgets/set_preview.dart';
@@ -38,7 +39,8 @@ class SetDetailsScreen extends StatelessWidget {
           if (dataRequest is GenericSetData) {
             return SetDetailsLayout(dataRequest: dataRequest);
           } else if (dataRequest is GameItem) {
-            return Center(child: Text("This is an Item"));
+            //return Center(child: Text("This is an Item"));
+            return ItemDetailsLayout(dataRequest: dataRequest);
           } else {
             return Center(child: Text("Data Type Not Found"));
           }
@@ -136,6 +138,88 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                                 ? widget.dataRequest.set.itemName
                                 : widget.dataRequest.components[activeItem - 1]
                                     .itemName);
+                      }
+                    : null,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ItemDetailsLayout extends StatefulWidget {
+  const ItemDetailsLayout({
+    super.key,
+    required this.dataRequest,
+  });
+
+  final GameItem dataRequest;
+
+  @override
+  State<ItemDetailsLayout> createState() => _ItemDetailsLayoutState();
+}
+
+class _ItemDetailsLayoutState extends State<ItemDetailsLayout> {
+  int activeItem = 0;
+
+  void setActiveItem(int itemNum) {
+    setState(() {
+      activeItem = itemNum;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          const SarynBackground(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ItemTitle(
+                  fullSetName: widget.dataRequest.itemName.toUpperCase(),
+                  itemName: widget.dataRequest.itemName.toUpperCase()),
+              CustomButton(
+                text: "Wiki",
+                textSize: 20,
+                width: 100,
+                height: 35,
+                borderSize: 1.5,
+                imagePath: "assets/lotusSymbol.png",
+                function: () {
+                  debugPrint("Wiki Button Pressed");
+                },
+              ),
+              ItemPreview(
+                itemURL: widget.dataRequest.imageURL,
+                size: 300,
+                isActive: true,
+                positionInList: 0,
+                updateState: null,
+              ),
+              ItemDescription(description: widget.dataRequest.itemDescription),
+              ValuesBox(
+                masteryLevel: null,
+                tradingTax: widget.dataRequest.tradingTax,
+                ducats: null,
+              ),
+              CustomButton(
+                text: "LISTINGS",
+                function: () {
+                  Navigator.pushNamed(context, "/listings",
+                      arguments: widget.dataRequest.itemName);
+                },
+              ),
+              CustomButton(
+                text: "SOURCES",
+                function: (activeItem != 0)
+                    ? () {
+                        Navigator.pushNamed(context, "/sources",
+                            arguments: widget.dataRequest.itemName);
                       }
                     : null,
               ),
