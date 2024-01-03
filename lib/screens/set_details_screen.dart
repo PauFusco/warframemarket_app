@@ -148,26 +148,13 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
   }
 }
 
-class ItemDetailsLayout extends StatefulWidget {
+class ItemDetailsLayout extends StatelessWidget {
   const ItemDetailsLayout({
     super.key,
     required this.dataRequest,
   });
 
   final GameItem dataRequest;
-
-  @override
-  State<ItemDetailsLayout> createState() => _ItemDetailsLayoutState();
-}
-
-class _ItemDetailsLayoutState extends State<ItemDetailsLayout> {
-  int activeItem = 0;
-
-  void setActiveItem(int itemNum) {
-    setState(() {
-      activeItem = itemNum;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,8 +167,8 @@ class _ItemDetailsLayoutState extends State<ItemDetailsLayout> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ItemTitle(
-                  fullSetName: widget.dataRequest.itemName.toUpperCase(),
-                  itemName: widget.dataRequest.itemName.toUpperCase()),
+                  fullSetName: dataRequest.itemName.toUpperCase(),
+                  itemName: dataRequest.itemName.toUpperCase()),
               CustomButton(
                 text: "Wiki",
                 textSize: 20,
@@ -194,35 +181,31 @@ class _ItemDetailsLayoutState extends State<ItemDetailsLayout> {
                 },
               ),
               ItemPreview(
-                itemURL: widget.dataRequest.imageURL,
+                itemURL: dataRequest.imageURL,
                 size: 300,
                 isActive: true,
                 positionInList: 0,
                 updateState: null,
               ),
-              ItemDescription(description: widget.dataRequest.itemDescription),
+              ItemDescription(description: dataRequest.itemDescription),
               ValuesBox(
                 masteryLevel: null,
                 ducats: null,
-                tradingTax: widget.dataRequest.tradingTax,
-                maxRank: widget.dataRequest.maxRank,
-                rarity: widget.dataRequest.rarity,
+                tradingTax: dataRequest.tradingTax,
+                maxRank: dataRequest.maxRank,
+                rarity: dataRequest.rarity,
               ),
               CustomButton(
                 text: "LISTINGS",
                 function: () {
                   Navigator.pushNamed(context, "/listings",
-                      arguments: widget.dataRequest.itemName);
+                      arguments: dataRequest.itemName);
                 },
               ),
-              CustomButton(
+              const CustomButton(
                 text: "SOURCES",
-                function: (activeItem != 0)
-                    ? () {
-                        Navigator.pushNamed(context, "/sources",
-                            arguments: widget.dataRequest.itemName);
-                      }
-                    : null,
+                //function: () {Navigator.pushNamed(context, "/sources", arguments: dataRequest.itemName);},
+                function: null,
               ),
             ],
           ),
