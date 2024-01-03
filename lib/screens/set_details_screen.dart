@@ -124,7 +124,11 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                 text: "SOURCES",
                 function: (activeItem != 0)
                     ? () {
-                        Navigator.pushNamed(context, "/sources");
+                        Navigator.pushNamed(context, "/sources",
+                            arguments: (activeItem == 0)
+                                ? widget.dataRequest.set.itemName
+                                : widget.dataRequest.components[activeItem - 1]
+                                    .itemName);
                       }
                     : null,
               ),

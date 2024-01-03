@@ -42,13 +42,21 @@ class _SourcesScreenState extends State<SourcesScreen> {
           return Center(
             child: Stack(
               children: [
-                SarynBackground(),
+                const SarynBackground(),
                 Container(
                   color: const Color.fromARGB(230, 17, 24, 27),
                 ),
                 Column(
                   children: [
-                    for (var item in dataRequest) Text(item.relicName)
+                    for (var item in dataRequest)
+                      SizedBox(
+                        width: 300,
+                        height: 100,
+                        child: Text(
+                          item.relicName,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                   ],
                 )
               ],

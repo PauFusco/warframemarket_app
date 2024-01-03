@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RelicSource {
@@ -22,7 +23,7 @@ class Source {
         radiant = -1;
 
   Source.fromJson(Map<String, dynamic> sourceJson)
-      : id = sourceJson["id"],
+      : id = sourceJson["relic"],
         intact = sourceJson["rates"]["intact"],
         exceptional = sourceJson["rates"]["exceptional"],
         flawless = sourceJson["rates"]["flawless"],
@@ -54,7 +55,7 @@ Future<List<RelicSource>> loadAllRelicSources(String itemName) async {
 
   for (var source in sourceList) {
     for (var item in jsonItemList) {
-      if (item["id"] == source.id) {
+      if (source.id == item["id"]) {
         var relicToAdd = RelicSource.fromJson(item, source);
         relicList.add(relicToAdd);
       }
