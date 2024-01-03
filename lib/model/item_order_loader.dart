@@ -5,7 +5,6 @@ class ItemOrder {
   int quantity;
   int price;
   String orderType;
-  bool visible;
   String userName;
   String userImageURL;
   String userRegion;
@@ -15,7 +14,6 @@ class ItemOrder {
       : quantity = -1,
         price = -1,
         orderType = "",
-        visible = false,
         userName = "UserNotFound",
         userImageURL = "UserNotFound",
         userRegion = "UserRegionNotFound",
@@ -25,7 +23,6 @@ class ItemOrder {
       : quantity = orderJson["quantity"],
         price = orderJson["platinum"],
         orderType = orderJson["order_type"],
-        visible = orderJson["visible"],
         userName = orderJson["user"]["ingame_name"],
         userImageURL = orderJson["user"]["avatar"] != null
             ? "https://warframe.market/static/assets/${orderJson["user"]["avatar"]}"
