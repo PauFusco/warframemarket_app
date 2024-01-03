@@ -36,14 +36,15 @@ class ItemSourceBanner extends StatelessWidget {
                   Text(
                     relic.relicName,
                     style: const TextStyle(
-                        color: Color.fromARGB(255, 60, 135, 156),
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color.fromARGB(255, 60, 135, 156)),
-                  )
+                      color: Color.fromARGB(255, 60, 135, 156),
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromARGB(255, 60, 135, 156),
+                    ),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

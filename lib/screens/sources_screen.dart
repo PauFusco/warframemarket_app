@@ -56,7 +56,7 @@ class _SourcesScreenState extends State<SourcesScreen> {
                         ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );
