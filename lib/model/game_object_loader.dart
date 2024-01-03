@@ -14,7 +14,7 @@ Future<dynamic> loadGameObject(String objectName) async {
     List<SetItem> componentsToAdd = [];
 
     for (var component in jsonItemsList) {
-      if (component["url_name"].toString().contains("prime_set")) {
+      if (component["url_name"].toString().contains("_set")) {
         setToAdd = SetItem.fromJson(component);
       } else if (component != null) {
         componentsToAdd.add(SetItem.fromJson(component));

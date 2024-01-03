@@ -36,14 +36,12 @@ class SetDetailsScreen extends StatelessWidget {
           }
           final dataRequest = snapshot.data!;
           if (dataRequest is GenericSetData) {
-            return Center(child: Text("This is a set"));
+            return SetDetailsLayout(dataRequest: dataRequest);
           } else if (dataRequest is GameItem) {
             return Center(child: Text("This is an Item"));
           } else {
             return Center(child: Text("Data Type Not Found"));
           }
-
-          //return SetDetailsLayout(dataRequest: dataRequest);
         },
       ),
     );
@@ -82,6 +80,7 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ItemTitle(
+                  fullSetName: widget.dataRequest.set.itemName.toUpperCase(),
                   itemName: (activeItem == 0)
                       ? widget.dataRequest.set.itemName.toUpperCase()
                       : widget.dataRequest.components[activeItem - 1].itemName

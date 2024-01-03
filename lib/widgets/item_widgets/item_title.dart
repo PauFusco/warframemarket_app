@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 class ItemTitle extends StatelessWidget {
   const ItemTitle({
     super.key,
+    required this.fullSetName,
     required this.itemName,
   });
 
+  final String fullSetName;
   final String itemName;
 
   @override
   Widget build(BuildContext context) {
-    final splitted = itemName.split("PRIME");
 
-    String setName = "${splitted[0]}PRIME";
-    String componentName = splitted[1];
+    String shortSetName = fullSetName.split(" SET")[0];
+    String componentName = itemName.split(shortSetName)[1];
 
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: setName,
+            text: shortSetName,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 40,
