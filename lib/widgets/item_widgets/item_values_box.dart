@@ -3,17 +3,33 @@ import 'package:flutter/material.dart';
 class ValuesBox extends StatelessWidget {
   const ValuesBox({
     super.key,
-    required this.masteryLevel,
     required this.tradingTax,
-    required this.ducats,
+    this.masteryLevel,
+    this.ducats,
   });
 
-  final int masteryLevel;
   final int tradingTax;
-  final int ducats;
+  final int? masteryLevel;
+  final int? ducats;
 
   @override
   Widget build(BuildContext context) {
+    final List<ValueProperty> propertiesList = [];
+
+    propertiesList.add(
+      ValueProperty(propertyName: "Trading Tax", value: tradingTax),
+    );
+    if (masteryLevel != null) {
+      propertiesList.add(
+        ValueProperty(propertyName: "Mastery Lvl", value: masteryLevel!),
+      );
+    }
+    if (ducats != null) {
+      propertiesList.add(
+        ValueProperty(propertyName: "Ducats", value: ducats!),
+      );
+    }
+
     return Container(
       width: 400,
       height: 70,
@@ -22,11 +38,7 @@ class ValuesBox extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ValueProperty(propertyName: "Mastery Lvl", value: masteryLevel),
-          ValueProperty(propertyName: "Trading Tax", value: tradingTax),
-          ValueProperty(propertyName: "Ducats", value: ducats),
-        ],
+        children: propertiesList,
       ),
     );
   }

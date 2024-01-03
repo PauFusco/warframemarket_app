@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warframemarket_app/model/set_loader.dart';
+import 'package:warframemarket_app/model/game_object_loader.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_preview.dart';
 
 class SetPreview extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warframemarket_app/model/set_loader.dart';
+import 'package:warframemarket_app/model/game_object_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_description.dart';
@@ -23,7 +23,7 @@ class SetDetailsScreen extends StatelessWidget {
           toolbarHeight: 80,
           backgroundColor: const Color.fromARGB(255, 74, 100, 130)),
       body: FutureBuilder(
-        future: loadGenericSet(setToLoad!),
+        future: loadGameObject(setToLoad!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
@@ -35,7 +35,15 @@ class SetDetailsScreen extends StatelessWidget {
             );
           }
           final dataRequest = snapshot.data!;
-          return SetDetailsLayout(dataRequest: dataRequest);
+          if (dataRequest is GenericSetData) {
+            return Center(child: Text("This is a set"));
+          } else if (dataRequest is GameItem) {
+            return Center(child: Text("This is an Item"));
+          } else {
+            return Center(child: Text("Data Type Not Found"));
+          }
+
+          //return SetDetailsLayout(dataRequest: dataRequest);
         },
       ),
     );
