@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warframemarket_app/model/item_loader.dart';
+import 'package:warframemarket_app/model/set_loader.dart';
 
 class ItemPreview extends StatelessWidget {
   const ItemPreview({
@@ -12,7 +12,7 @@ class ItemPreview extends StatelessWidget {
     this.updateState,
   });
 
-  final WarframeItem item;
+  final SetItem item;
   final double size;
   final int opacity;
   final bool isActive;

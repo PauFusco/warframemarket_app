@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class WarframeItem {
+class SetItem {
   String itemName;
   String itemDescription;
   String imageURL;
@@ -9,14 +9,14 @@ class WarframeItem {
   int tradingTax;
   int ducats;
 
-  WarframeItem()
+  SetItem()
       : itemName = "ItemNotFound",
         itemDescription = "NoDescription",
         imageURL = (""),
         masteryLevel = -1,
         tradingTax = -1,
         ducats = -1;
-  WarframeItem.fromJson(Map<String, dynamic> itemJson)
+  SetItem.fromJson(Map<String, dynamic> itemJson)
       : itemName = itemJson["en"]["item_name"],
         itemDescription = itemJson["en"]["description"],
         imageURL = (!itemJson["en"]["item_name"].contains("Set")
@@ -28,8 +28,8 @@ class WarframeItem {
 }
 
 class GenericSetData {
-  WarframeItem set;
-  List<WarframeItem> components;
+  SetItem set;
+  List<SetItem> components;
 
   GenericSetData(this.set, this.components);
 }
@@ -42,19 +42,19 @@ Future<GenericSetData> loadGenericSet(String setName) async {
 
   var jsonItemsList = json["payload"]["item"]["items_in_set"];
 
-  WarframeItem? setToAdd;
-  List<WarframeItem> componentsToAdd = [];
+  SetItem? setToAdd;
+  List<SetItem> componentsToAdd = [];
 
   for (var component in jsonItemsList) {
     if (component["url_name"].toString().contains("prime_set")) {
-      setToAdd = WarframeItem.fromJson(component);
+      setToAdd = SetItem.fromJson(component);
     } else if (component != null) {
-      componentsToAdd.add(WarframeItem.fromJson(component));
+      componentsToAdd.add(SetItem.fromJson(component));
     } else {
-      componentsToAdd.add(WarframeItem());
+      componentsToAdd.add(SetItem());
     }
   }
-  setToAdd ??= WarframeItem();
+  setToAdd ??= SetItem();
 
   return GenericSetData(setToAdd, componentsToAdd);
 }
