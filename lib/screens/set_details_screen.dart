@@ -39,7 +39,6 @@ class SetDetailsScreen extends StatelessWidget {
           if (dataRequest is GenericSetData) {
             return SetDetailsLayout(dataRequest: dataRequest);
           } else if (dataRequest is GameItem) {
-            //return Center(child: Text("This is an Item"));
             return ItemDetailsLayout(dataRequest: dataRequest);
           } else {
             return Center(child: Text("Data Type Not Found"));
@@ -204,8 +203,10 @@ class _ItemDetailsLayoutState extends State<ItemDetailsLayout> {
               ItemDescription(description: widget.dataRequest.itemDescription),
               ValuesBox(
                 masteryLevel: null,
-                tradingTax: widget.dataRequest.tradingTax,
                 ducats: null,
+                tradingTax: widget.dataRequest.tradingTax,
+                maxRank: widget.dataRequest.maxRank,
+                rarity: widget.dataRequest.rarity,
               ),
               CustomButton(
                 text: "LISTINGS",

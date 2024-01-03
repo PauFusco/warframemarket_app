@@ -6,27 +6,44 @@ class ValuesBox extends StatelessWidget {
     required this.tradingTax,
     this.masteryLevel,
     this.ducats,
+    this.maxRank,
+    this.rarity,
   });
 
   final int tradingTax;
   final int? masteryLevel;
   final int? ducats;
+  final int? maxRank;
+  final String? rarity;
 
   @override
   Widget build(BuildContext context) {
     final List<ValueProperty> propertiesList = [];
 
     propertiesList.add(
-      ValueProperty(propertyName: "Trading Tax", value: tradingTax),
+      ValueProperty(propertyName: "Trading Tax", value: tradingTax.toString()),
     );
     if (masteryLevel != null) {
       propertiesList.add(
-        ValueProperty(propertyName: "Mastery Lvl", value: masteryLevel!),
+        ValueProperty(
+            propertyName: "Mastery Lvl", value: masteryLevel.toString()),
       );
     }
     if (ducats != null) {
       propertiesList.add(
-        ValueProperty(propertyName: "Ducats", value: ducats!),
+        ValueProperty(propertyName: "Ducats", value: ducats.toString()),
+      );
+    }
+    if (maxRank != null) {
+      propertiesList.add(
+        ValueProperty(propertyName: "Max Rank", value: maxRank.toString()),
+      );
+    }
+    if (rarity != null) {
+      propertiesList.add(
+        ValueProperty(
+            propertyName: "Rarity",
+            value: "${rarity![0].toUpperCase()}${rarity!.substring(1)}"),
       );
     }
 
@@ -52,7 +69,7 @@ class ValueProperty extends StatelessWidget {
   });
 
   final String propertyName;
-  final int value;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
