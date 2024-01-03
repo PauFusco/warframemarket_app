@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RelicSource {
-  String relicName;
+  String relicName, itemImageURL;
   Source sourceData;
 
   RelicSource.fromJson(Map<String, dynamic> itemJson, Source dropDataToGet)
       : relicName = itemJson["item_name"],
+        itemImageURL =
+            "https://warframe.market/static/assets/${itemJson["thumb"]}",
         sourceData = dropDataToGet;
 }
 
