@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_source_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
+import 'package:warframemarket_app/widgets/item_source_banner.dart';
 
 class SourcesScreen extends StatefulWidget {
   const SourcesScreen({super.key});
@@ -46,18 +47,15 @@ class _SourcesScreenState extends State<SourcesScreen> {
                 Container(
                   color: const Color.fromARGB(230, 17, 24, 27),
                 ),
-                Column(
-                  children: [
-                    for (var item in dataRequest)
-                      SizedBox(
-                        width: 300,
-                        height: 100,
-                        child: Text(
-                          item.relicName,
-                          style: TextStyle(color: Colors.white),
+                Center(
+                  child: Column(
+                    children: [
+                      for (var item in dataRequest)
+                        ItemSourceBanner(
+                          relic: item,
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),
