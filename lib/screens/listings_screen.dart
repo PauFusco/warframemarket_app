@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_order_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
+import 'package:warframemarket_app/widgets/buy_sell_button.dart';
 import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_order_banner.dart';
 
@@ -56,53 +57,19 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   height: 40,
                   child: Row(
                     children: [
-                      ElevatedButton(
-                        onPressed: () => setActiveItem(0),
-                        style: ButtonStyle(
-                          fixedSize: MaterialStatePropertyAll(
-                            Size(screenSize.width / 2.0, 40),
-                          ),
-                          backgroundColor: const MaterialStatePropertyAll(
-                            Color.fromARGB(255, 23, 30, 33),
-                          ),
-                          shape: const MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          "SELL",
-                          style: TextStyle(
-                            color: activeTab == 0
-                                ? const Color.fromARGB(255, 24, 151, 127)
-                                : const Color.fromARGB(255, 50, 114, 131),
-                          ),
-                        ),
+                      BuySellButton(
+                        text: "SELL",
+                        width: screenSize.width / 2,
+                        height: 40,
+                        active: activeTab == 0,
+                        function: () => setActiveItem(0),
                       ),
-                      ElevatedButton(
-                        onPressed: () => setActiveItem(1),
-                        style: ButtonStyle(
-                          fixedSize: MaterialStatePropertyAll(
-                            Size(screenSize.width / 2.0, 40),
-                          ),
-                          backgroundColor: const MaterialStatePropertyAll(
-                            Color.fromARGB(255, 23, 30, 33),
-                          ),
-                          shape: const MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          "BUY",
-                          style: TextStyle(
-                            color: activeTab == 1
-                                ? const Color.fromARGB(255, 24, 151, 127)
-                                : const Color.fromARGB(255, 50, 114, 131),
-                          ),
-                        ),
+                      BuySellButton(
+                        text: "BUY",
+                        width: screenSize.width / 2,
+                        height: 40,
+                        active: activeTab == 1,
+                        function: () => setActiveItem(1),
                       ),
                     ],
                   ),
