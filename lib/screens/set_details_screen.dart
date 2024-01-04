@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/game_object_loader.dart';
+import 'package:warframemarket_app/string_extension.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_description.dart';
@@ -37,11 +38,13 @@ class SetDetailsScreen extends StatelessWidget {
           }
           final dataRequest = snapshot.data!;
           if (dataRequest is GenericSetData) {
-            return SetDetailsLayout(dataRequest: dataRequest);
+            return SetDetailsLayout(
+                dataRequest: dataRequest,
+                startingItemName: setToLoad.snakeToTitleCase());
           } else if (dataRequest is GameItem) {
             return ItemDetailsLayout(dataRequest: dataRequest);
           } else {
-            return Center(child: Text("Data Type Not Found"));
+            return const Center(child: Text("Data Type Not Found"));
           }
         },
       ),
@@ -53,9 +56,11 @@ class SetDetailsLayout extends StatefulWidget {
   const SetDetailsLayout({
     super.key,
     required this.dataRequest,
+    required this.startingItemName,
   });
 
   final GenericSetData dataRequest;
+  final String startingItemName;
 
   @override
   State<SetDetailsLayout> createState() => _SetDetailsLayoutState();
@@ -68,6 +73,19 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
     setState(() {
       activeItem = itemNum;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (int i = 0; i < widget.dataRequest.components.length; i++) {
+      if (widget.dataRequest.components[i].itemName ==
+          widget.startingItemName) {
+        activeItem = i + 1;
+        break;
+      }
+    }
   }
 
   @override

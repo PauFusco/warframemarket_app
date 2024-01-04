@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:warframemarket_app/model/item_search_loader.dart';
+import 'package:warframemarket_app/string_extension.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -133,13 +134,4 @@ class AutoCompTest extends StatelessWidget {
       },
     );
   }
-}
-
-extension StringCasingExtension on String {
-  String toCapitalized() =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized())
-      .join(' ');
 }
