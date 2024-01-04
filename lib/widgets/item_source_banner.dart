@@ -4,10 +4,10 @@ import 'package:warframemarket_app/model/item_source_loader.dart';
 class ItemSourceBanner extends StatelessWidget {
   const ItemSourceBanner({
     super.key,
-    required this.relic,
+    required this.source,
   });
 
-  final RelicSource relic;
+  final GenericSource source;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ItemSourceBanner extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: NetworkImage(relic.itemImageURL),
+                  image: NetworkImage(source.sourceImageURL!),
                 ),
               ),
             ),
@@ -34,7 +34,7 @@ class ItemSourceBanner extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    relic.relicName,
+                    source.name!,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 60, 135, 156),
                       fontWeight: FontWeight.bold,

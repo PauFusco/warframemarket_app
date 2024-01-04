@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 class GenericSource {
   String id, type;
+  String? name, sourceImageURL;
   int? rate;
   int? intact, exceptional, flawless, radiant;
 
@@ -16,28 +17,32 @@ class GenericSource {
 }
 
 class RelicSource extends GenericSource {
-  String relicName, itemImageURL;
+  @override
+  String? name, sourceImageURL;
+
   RelicSource.fromJson(Map<String, dynamic> itemJson)
-      : relicName = itemJson["item_name"],
-        itemImageURL =
+      : name = itemJson["item_name"],
+        sourceImageURL =
             "https://warframe.market/static/assets/${itemJson["thumb"]}";
 }
 
 class MissionSource extends GenericSource {
-  String missionName, missionImageURL;
+  @override
+  String? name, sourceImageURL;
 
   MissionSource.fromJson(Map<String, dynamic> missionJson)
-      : missionName = missionJson["name"],
-        missionImageURL =
+      : name = missionJson["name"],
+        sourceImageURL =
             "https://warframe.market/static/assets/${missionJson["thumb"]}";
 }
 
 class NPCSource extends GenericSource {
-  String npcName, npcImageURL;
+  @override
+  String? name, sourceImageURL;
 
   NPCSource.fromJson(Map<String, dynamic> npcJson)
-      : npcName = npcJson["name"],
-        npcImageURL =
+      : name = npcJson["name"],
+        sourceImageURL =
             "https://warframe.market/static/assets/${npcJson["thumb"]}";
 }
 

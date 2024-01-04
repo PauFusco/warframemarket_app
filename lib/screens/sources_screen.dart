@@ -49,10 +49,30 @@ class _SourcesScreenState extends State<SourcesScreen> {
                 Center(
                   child: Column(
                     children: [
-                      for (var item in dataRequest.relics)
-                        ItemSourceBanner(
-                          relic: item,
-                        ),
+                      Column(
+                        children: [
+                          for (var relic in dataRequest.relics)
+                            ItemSourceBanner(
+                              source: relic,
+                            ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          for (var mission in dataRequest.missions)
+                            ItemSourceBanner(
+                              source: mission,
+                            )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          for (var npc in dataRequest.npcs)
+                            ItemSourceBanner(
+                              source: npc,
+                            )
+                        ],
+                      )
                     ],
                   ),
                 ),
