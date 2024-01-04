@@ -199,8 +199,42 @@ class ItemDetailsLayout extends StatelessWidget {
                 borderSize: 1.5,
                 imagePath: "assets/lotusSymbol.png",
                 function: () {
-                  debugPrint("Wiki Button Pressed");
-                  openUrl(dataRequest.wikiLink);
+                  if (dataRequest.wikiLink != null) {
+                    openUrl(dataRequest.wikiLink);
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Error"),
+                            content: const SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text(
+                                      "The Wiki link for this object was not found."),
+                                  Text(
+                                      "Would you like to navigate to the Wiki's homepage?"),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text("Go Back"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text("Yes"),
+                                onPressed: () {
+                                  openUrl(
+                                      "https://warframe.fandom.com/wiki/WARFRAME_Wiki");
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  }
                 },
               ),
               ItemPreview(
