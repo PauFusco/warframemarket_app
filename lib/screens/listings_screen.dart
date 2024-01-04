@@ -87,16 +87,6 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   ),
                   child: Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 50),
-                        child: Text(
-                          "SORT BY",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 160, 164, 165),
-                          ),
-                        ),
-                      ),
                       const Spacer(),
                       Row(
                         children: [

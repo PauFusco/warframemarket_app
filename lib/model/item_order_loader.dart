@@ -55,19 +55,52 @@ Future<AllOrdersLists> loadAllOrderLists(String itemName) async {
         : sellOrdersToAdd.add(order);
   }
 
-  buyOrdersToAdd.sort(compareStatus);
-  sellOrdersToAdd.sort(compareStatus);
+  buyOrdersToAdd.sort(compareUserPrice);
+  sellOrdersToAdd.sort(compareUserPrice);
 
   return AllOrdersLists(buyOrdersToAdd, sellOrdersToAdd);
 }
 
 // Custom comparator function
-int compareStatus(ItemOrder a, ItemOrder b) {
-  // Define the order of statuses
+int compareUserStatus(ItemOrder a, ItemOrder b) {
   Map<String, int> statusOrder = {
     "ingame": 0,
     "online": 1,
     "offline": 2,
   };
-  return statusOrder[a.userStatus]!.compareTo(statusOrder[b.userStatus]!);
+
+  int compareStatusResult =
+      statusOrder[a.userStatus]!.compareTo(statusOrder[b.userStatus]!);
+
+  return compareStatusResult;
+}
+
+int compareUserPrice(ItemOrder a, ItemOrder b) {
+  Map<String, int> statusOrder = {
+    "ingame": 0,
+    "online": 1,
+    "offline": 2,
+  };
+
+  int compareStatusResult =
+      statusOrder[a.userStatus]!.compareTo(statusOrder[b.userStatus]!);
+
+  if (compareStatusResult == 0) return a.price.compareTo(b.price);
+
+  return compareStatusResult;
+}
+
+int compareUserQuantity(ItemOrder a, ItemOrder b) {
+  Map<String, int> statusOrder = {
+    "ingame": 0,
+    "online": 1,
+    "offline": 2,
+  };
+
+  int compareStatusResult =
+      statusOrder[a.userStatus]!.compareTo(statusOrder[b.userStatus]!);
+
+  if (compareStatusResult == 0) return a.quantity.compareTo(b.quantity);
+
+  return compareStatusResult;
 }

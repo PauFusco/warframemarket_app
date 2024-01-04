@@ -52,8 +52,12 @@ class ItemOrderBanner extends StatelessWidget {
                   ),
                   Text(
                     order.userStatus,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 137, 149, 153),
+                    style: TextStyle(
+                      color: (order.userStatus == "ingame")
+                          ? const Color.fromARGB(255, 147, 112, 219)
+                          : (order.userStatus == "online")
+                              ? const Color.fromARGB(255, 0, 100, 0)
+                              : const Color.fromARGB(255, 139, 0, 0),
                       fontSize: 12,
                     ),
                   ),
