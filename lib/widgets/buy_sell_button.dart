@@ -17,27 +17,39 @@ class BuySellButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: function,
-      style: ButtonStyle(
-        fixedSize: MaterialStatePropertyAll(
-          Size(width, 40),
-        ),
-        backgroundColor: const MaterialStatePropertyAll(
-          Color.fromARGB(255, 23, 30, 33),
-        ),
-        shape: const MaterialStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
+    return Container(
+      decoration: BoxDecoration(
+        border: active
+            ? const Border(
+                bottom: BorderSide(
+                  width: 3,
+                  color: Color.fromARGB(255, 24, 149, 126),
+                ),
+              )
+            : null,
+      ),
+      child: ElevatedButton(
+        onPressed: function,
+        style: ButtonStyle(
+          fixedSize: MaterialStatePropertyAll(
+            Size(width, 40),
+          ),
+          backgroundColor: const MaterialStatePropertyAll(
+            Color.fromARGB(255, 23, 30, 33),
+          ),
+          shape: const MaterialStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
           ),
         ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: active
-              ? const Color.fromARGB(255, 24, 151, 127)
-              : const Color.fromARGB(255, 50, 114, 131),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: active
+                ? const Color.fromARGB(255, 24, 151, 127)
+                : const Color.fromARGB(255, 50, 114, 131),
+          ),
         ),
       ),
     );
