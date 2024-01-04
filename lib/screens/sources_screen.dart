@@ -13,7 +13,6 @@ class SourcesScreen extends StatefulWidget {
 class _SourcesScreenState extends State<SourcesScreen> {
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     final String? itemToLoad =
         ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
@@ -26,7 +25,7 @@ class _SourcesScreenState extends State<SourcesScreen> {
         backgroundColor: const Color.fromARGB(255, 74, 100, 130),
       ),
       body: FutureBuilder(
-        future: loadAllRelicSources(
+        future: loadAllSources(
           itemToLoad!.toLowerCase().replaceAll(" ", "_"),
         ),
         builder: (context, snapshot) {
@@ -50,7 +49,7 @@ class _SourcesScreenState extends State<SourcesScreen> {
                 Center(
                   child: Column(
                     children: [
-                      for (var item in dataRequest)
+                      for (var item in dataRequest.relics)
                         ItemSourceBanner(
                           relic: item,
                         ),
