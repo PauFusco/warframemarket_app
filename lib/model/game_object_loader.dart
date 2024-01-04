@@ -35,6 +35,7 @@ class SetItem {
   String itemName;
   String itemDescription;
   String imageURL;
+  String? wikiLink;
   int tradingTax;
   int? masteryLevel;
   int? ducats;
@@ -42,9 +43,10 @@ class SetItem {
   SetItem()
       : itemName = "ItemNotFound",
         itemDescription = "NoDescription",
-        imageURL = (""),
-        masteryLevel = -1,
+        imageURL = "",
+        wikiLink = "https://warframe.fandom.com/wiki/WARFRAME_Wiki",
         tradingTax = -1,
+        masteryLevel = -1,
         ducats = -1;
   SetItem.fromJson(Map<String, dynamic> itemJson)
       : itemName = itemJson["en"]["item_name"],
@@ -52,8 +54,9 @@ class SetItem {
         imageURL = (!itemJson["en"]["item_name"].contains("Set")
             ? "https://warframe.market/static/assets/${itemJson["sub_icon"]}"
             : "https://warframe.market/static/assets/${itemJson["icon"]}"),
-        masteryLevel = itemJson["mastery_level"],
+        wikiLink = itemJson["en"]["wiki_link"],
         tradingTax = itemJson["trading_tax"],
+        masteryLevel = itemJson["mastery_level"],
         ducats = itemJson["ducats"];
 }
 
@@ -68,6 +71,7 @@ class GameItem {
   String itemName;
   String itemDescription;
   String imageURL;
+  String? wikiLink;
   int tradingTax;
   int? maxRank;
   String? rarity;
@@ -75,14 +79,16 @@ class GameItem {
   GameItem()
       : itemName = "ItemNotFound",
         itemDescription = "NoDescription",
-        imageURL = (""),
+        imageURL = "",
+        wikiLink = "https://warframe.fandom.com/wiki/WARFRAME_Wiki",
         tradingTax = -1,
         maxRank = -1,
         rarity = "NoRarity";
   GameItem.fromJson(Map<String, dynamic> itemJson)
       : itemName = itemJson["en"]["item_name"],
         itemDescription = itemJson["en"]["description"],
-        imageURL = "https://warframe.market/static/assets/${itemJson["en"]["icon"]}",
+        imageURL = "https://warframe.market/static/assets/${itemJson["icon"]}",
+        wikiLink = itemJson["en"]["wiki_link"],
         tradingTax = itemJson["trading_tax"],
         maxRank = itemJson["mod_max_rank"],
         rarity = itemJson["rarity"];

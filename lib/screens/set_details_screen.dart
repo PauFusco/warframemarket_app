@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/game_object_loader.dart';
 import 'package:warframemarket_app/string_extension.dart';
+import 'package:warframemarket_app/url_launcher.dart';
 import 'package:warframemarket_app/widgets/background.dart';
 import 'package:warframemarket_app/widgets/custom_button.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_description.dart';
@@ -113,6 +114,9 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                 imagePath: "assets/lotusSymbol.png",
                 function: () {
                   debugPrint("Wiki Button Pressed");
+                  openUrl((activeItem == 0)
+                      ? widget.dataRequest.set.wikiLink
+                      : widget.dataRequest.components[activeItem - 1].wikiLink);
                 },
               ),
               SetPreview(
@@ -196,6 +200,7 @@ class ItemDetailsLayout extends StatelessWidget {
                 imagePath: "assets/lotusSymbol.png",
                 function: () {
                   debugPrint("Wiki Button Pressed");
+                  openUrl(dataRequest.wikiLink);
                 },
               ),
               ItemPreview(
