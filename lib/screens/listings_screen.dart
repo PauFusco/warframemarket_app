@@ -58,18 +58,78 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     children: [
                       BuySellButton(
                         text: "SELL",
-                        width: screenSize.width / 2,
+                        width: screenSize.width / 2.0,
                         height: 40,
                         active: activeTab == 0,
                         function: () => setActiveItem(0),
                       ),
                       BuySellButton(
                         text: "BUY",
-                        width: screenSize.width / 2,
+                        width: screenSize.width / 2.0,
                         height: 40,
                         active: activeTab == 1,
                         function: () => setActiveItem(1),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: screenSize.width,
+                  height: 35,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 28, 32, 34),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color.fromARGB(255, 11, 13, 14),
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 50),
+                        child: Text(
+                          "SORT BY",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 160, 164, 165),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.only(
+                              right: 25,
+                            ),
+                            child: const Text(
+                              "QUANTITY",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 92, 97, 99),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.only(
+                              right: 25,
+                            ),
+                            child: const Text(
+                              "PRICE",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 92, 97, 99),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
