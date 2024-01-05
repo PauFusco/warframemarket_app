@@ -113,6 +113,8 @@ class _AutoCompTestState extends State<AutoCompTest> {
             onFieldSubmitted();
           },
           decoration: const InputDecoration(
+            labelText: "Search...",
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: Color.fromARGB(255, 18, 18, 18),
             enabledBorder: OutlineInputBorder(

@@ -11,8 +11,8 @@ class SarynBackground extends StatelessWidget {
       "assets/saryn_background.png",
       height: 973, //image height
       fit: BoxFit.none,
-      color: const Color.fromARGB(100, 80, 80, 80),
-      colorBlendMode: BlendMode.srcATop,
+      color: const Color.fromARGB(120, 20, 20, 20),
+      colorBlendMode: BlendMode.multiply,
     );
   }
 }
