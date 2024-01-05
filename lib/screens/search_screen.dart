@@ -147,14 +147,17 @@ class _AutoCompTestState extends State<AutoCompTest> {
           child: Material(
             elevation: 4.0,
             child: Container(
-              constraints: BoxConstraints(maxHeight: (options.length > 3) ? 192 : options.length * 48, maxWidth: 400),
+              constraints: BoxConstraints(
+                  maxHeight: (options.length > 3) ? 192 : options.length * 48,
+                  maxWidth: 400),
               color: const Color.fromARGB(255, 23, 30, 33),
               child: ListView.builder(
                 itemCount: options.length,
                 itemBuilder: (BuildContext context, int index) {
                   final String option = options.elementAt(index).name;
                   return ListTile(
-                    title: Text(option, style: const TextStyle(color: Colors.white)),
+                    title: Text(option,
+                        style: const TextStyle(color: Colors.white)),
                     onTap: () {
                       onSelected(options.elementAt(index));
                     },

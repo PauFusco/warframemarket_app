@@ -26,6 +26,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
     final String? itemToLoad =
         ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 23, 30, 33),
       appBar: AppBar(
         title: const Image(
           image: AssetImage("assets/warframe_market_logo.png"),
@@ -35,9 +36,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
         backgroundColor: const Color.fromARGB(255, 74, 100, 130),
       ),
       body: FutureBuilder(
-        future: loadAllOrderLists(
-          itemToLoad!.toLowerCase().replaceAll(" ", "_"),
-        ),
+        future: loadAllOrderLists(itemToLoad!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(
@@ -146,7 +145,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           )
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );

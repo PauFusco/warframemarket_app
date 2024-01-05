@@ -145,9 +145,9 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                 function: () {
                   Navigator.pushNamed(context, "/listings",
                       arguments: (activeItem == 0)
-                          ? widget.dataRequest.set.itemName
+                          ? widget.dataRequest.set.itemURL
                           : widget
-                              .dataRequest.components[activeItem - 1].itemName);
+                              .dataRequest.components[activeItem - 1].itemURL);
                 },
               ),
               CustomButton(
@@ -156,9 +156,9 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                     ? () {
                         Navigator.pushNamed(context, "/sources",
                             arguments: (activeItem == 0)
-                                ? widget.dataRequest.set.itemName
+                                ? widget.dataRequest.set.itemURL
                                 : widget.dataRequest.components[activeItem - 1]
-                                    .itemName);
+                                    .itemURL);
                       }
                     : null,
               ),
@@ -256,7 +256,7 @@ class ItemDetailsLayout extends StatelessWidget {
                 text: "LISTINGS",
                 function: () {
                   Navigator.pushNamed(context, "/listings",
-                      arguments: dataRequest.itemName);
+                      arguments: dataRequest.itemURL);
                 },
               ),
               const CustomButton(

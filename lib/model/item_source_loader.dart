@@ -13,51 +13,34 @@ class GenericSource {
 
   GenericSource.fromJson(Map<String, dynamic> sourceJson)
       : id = sourceJson["relic"],
-        type = sourceJson["type"];
+        type = sourceJson["type"],
+        intact = sourceJson["rates"]["intact"],
+        exceptional = sourceJson["rates"]["exceptional"],
+        flawless = sourceJson["rates"]["flawless"],
+        radiant = sourceJson["rates"]["radiant"];
 }
 
 class RelicSource extends GenericSource {
   @override
   String? name, sourceImageURL;
+  GenericSource sourceData;
+  bool vaulted;
 
-  RelicSource.fromJson(Map<String, dynamic> itemJson)
+  RelicSource.fromJson(
+      Map<String, dynamic> itemJson, GenericSource sourceDataToLoad)
       : name = itemJson["item_name"],
         sourceImageURL =
-            "https://warframe.market/static/assets/${itemJson["thumb"]}";
-}
-
-class MissionSource extends GenericSource {
-  @override
-  String? name, sourceImageURL;
-
-  MissionSource.fromJson(Map<String, dynamic> missionJson)
-      : name = missionJson["name"],
-        sourceImageURL =
-            "https://warframe.market/static/assets/${missionJson["thumb"]}";
-}
-
-class NPCSource extends GenericSource {
-  @override
-  String? name, sourceImageURL;
-
-  NPCSource.fromJson(Map<String, dynamic> npcJson)
-      : name = npcJson["name"],
-        sourceImageURL =
-            "https://warframe.market/static/assets/${npcJson["thumb"]}";
+            "https://warframe.market/static/assets/${itemJson["thumb"]}",
+        sourceData = sourceDataToLoad,
+        vaulted = itemJson["vaulted"];
 }
 
 class AllSources {
   final List<RelicSource> relics;
-  final List<MissionSource> missions;
-  final List<NPCSource> npcs;
 
   AllSources(
-    List<MissionSource> missionList,
     List<RelicSource> relicList,
-    List<NPCSource> npcList,
-  )   : missions = missionList,
-        relics = relicList,
-        npcs = npcList;
+  ) : relics = relicList;
 }
 
 Future<AllSources> loadAllSources(String itemName) async {
@@ -78,53 +61,23 @@ Future<AllSources> loadAllSources(String itemName) async {
   final itemResponse = await http.get(
     Uri.parse("https://api.warframe.market/v1/items"),
   );
-  final missionResponse = await http.get(
-    Uri.parse("https://api.warframe.market/v1/missions"),
-  );
-  final npcResponse = await http.get(
-    Uri.parse("https://api.warframe.market/v1/npc"),
-  );
 
   final itemJson = jsonDecode(itemResponse.body);
   final jsonItemList = itemJson["payload"]["items"];
   List<RelicSource> relicList = [];
 
-  final missionJson = jsonDecode(missionResponse.body);
-  final jsonMissionList = missionJson["payload"]["missions"];
-  List<MissionSource> missionList = [];
-
-  final npcJson = jsonDecode(npcResponse.body);
-  final jsonNPCList = npcJson["payload"]["npc"];
-  List<NPCSource> npcList = [];
-
   for (var source in sourceList) {
     if (source.type == "relic") {
       for (var item in jsonItemList) {
         if (source.id == item["id"]) {
-          var relicToAdd = RelicSource.fromJson(item);
+          var relicToAdd = RelicSource.fromJson(item, source);
           relicList.add(relicToAdd);
-        }
-      }
-    }
-    if (source.type == "mission") {
-      for (var mission in jsonMissionList) {
-        if (source.id == mission["id"]) {
-          var missionToAdd = MissionSource.fromJson(mission);
-          missionList.add(missionToAdd);
-        }
-      }
-    }
-    if (source.type == "npc") {
-      for (var npc in jsonNPCList) {
-        if (source.id == npc["id"]) {
-          var npcToAdd = NPCSource.fromJson(npc);
-          npcList.add(npcToAdd);
         }
       }
     }
   }
 
-  var sourcesToReturn = AllSources(missionList, relicList, npcList);
+  var sourcesToReturn = AllSources(relicList);
 
   return sourcesToReturn;
 }

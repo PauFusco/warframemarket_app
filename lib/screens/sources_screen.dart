@@ -46,36 +46,15 @@ class _SourcesScreenState extends State<SourcesScreen> {
                 Container(
                   color: const Color.fromARGB(230, 17, 24, 27),
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      Column(
-                        children: [
-                          for (var relic in dataRequest.relics)
-                            ItemSourceBanner(
-                              source: relic,
-                            ),
-                        ],
+                Expanded(
+                    child: ListView(
+                  children: [
+                    for (var relic in dataRequest.relics)
+                      ItemSourceBanner(
+                        source: relic,
                       ),
-                      Column(
-                        children: [
-                          for (var mission in dataRequest.missions)
-                            ItemSourceBanner(
-                              source: mission,
-                            )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          for (var npc in dataRequest.npcs)
-                            ItemSourceBanner(
-                              source: npc,
-                            )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+                  ],
+                ))
               ],
             ),
           );

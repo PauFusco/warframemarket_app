@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> loadGameObject(String objectName) async {
   final response = await http.get(
-    Uri.parse("https://api.warframe.market/v1/items/${objectName}"),
+    Uri.parse("https://api.warframe.market/v1/items/$objectName"),
   );
   final json = jsonDecode(response.body);
 
@@ -35,6 +35,7 @@ class SetItem {
   String itemName;
   String itemDescription;
   String imageURL;
+  String itemURL;
   String? wikiLink;
   int tradingTax;
   int? masteryLevel;
@@ -44,6 +45,7 @@ class SetItem {
       : itemName = "ItemNotFound",
         itemDescription = "NoDescription",
         imageURL = "",
+        itemURL = "",
         wikiLink = "https://warframe.fandom.com/wiki/WARFRAME_Wiki",
         tradingTax = -1,
         masteryLevel = -1,
@@ -54,6 +56,7 @@ class SetItem {
         imageURL = (!itemJson["en"]["item_name"].contains("Set")
             ? "https://warframe.market/static/assets/${itemJson["sub_icon"]}"
             : "https://warframe.market/static/assets/${itemJson["icon"]}"),
+        itemURL = itemJson["url_name"],
         wikiLink = itemJson["en"]["wiki_link"],
         tradingTax = itemJson["trading_tax"],
         masteryLevel = itemJson["mastery_level"],
@@ -71,6 +74,7 @@ class GameItem {
   String itemName;
   String itemDescription;
   String imageURL;
+  String itemURL;
   String? wikiLink;
   int tradingTax;
   int? maxRank;
@@ -80,6 +84,7 @@ class GameItem {
       : itemName = "ItemNotFound",
         itemDescription = "NoDescription",
         imageURL = "",
+        itemURL = "",
         wikiLink = "https://warframe.fandom.com/wiki/WARFRAME_Wiki",
         tradingTax = -1,
         maxRank = -1,
@@ -88,6 +93,7 @@ class GameItem {
       : itemName = itemJson["en"]["item_name"],
         itemDescription = itemJson["en"]["description"],
         imageURL = "https://warframe.market/static/assets/${itemJson["icon"]}",
+        itemURL = itemJson["url_name"],
         wikiLink = itemJson["en"]["wiki_link"],
         tradingTax = itemJson["trading_tax"],
         maxRank = itemJson["mod_max_rank"],
