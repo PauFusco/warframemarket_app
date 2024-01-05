@@ -9,6 +9,10 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AutoCompTest searchAutoComplete = AutoCompTest(
+      dataList: context.watch<List<SearchItemData>>(),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Image(
@@ -27,15 +31,22 @@ class SearchScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 400,
-                  child: AutoCompTest(
-                    dataList: context.watch<List<SearchItemData>>(),
-                  ),
+                  child: searchAutoComplete,
                 ),
-                Container(
-                  width: 65,
-                  height: 56,
-                  color: const Color.fromARGB(255, 60, 135, 156),
-                  child: const Icon(Icons.search),
+                GestureDetector(
+                  onTap: () {
+                    if (searchAutoComplete.currentFirstOption != null) {
+                      Navigator.pushNamed(context, "/set_details",
+                          arguments:
+                              searchAutoComplete.currentFirstOption!.url);
+                    }
+                  },
+                  child: Container(
+                    width: 65,
+                    height: 56,
+                    color: const Color.fromARGB(255, 60, 135, 156),
+                    child: const Icon(Icons.search),
+                  ),
                 )
               ],
             ),
@@ -46,36 +57,55 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class AutoCompTest extends StatelessWidget {
-  const AutoCompTest({
+class AutoCompTest extends StatefulWidget {
+  AutoCompTest({
     super.key,
     required this.dataList,
   });
 
   final List<SearchItemData> dataList;
   static String _displayStringForOption(SearchItemData option) => option.name;
+  SearchItemData? currentFirstOption;
+
+  @override
+  State<AutoCompTest> createState() => _AutoCompTestState();
+}
+
+class _AutoCompTestState extends State<AutoCompTest> {
+  void _updateCurrentFirstOption(SearchItemData? firstOption) {
+    widget.currentFirstOption = firstOption;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Autocomplete<SearchItemData>(
-      displayStringForOption: _displayStringForOption,
+      displayStringForOption: AutoCompTest._displayStringForOption,
       optionsBuilder: (TextEditingValue textEditingValue) {
         if (textEditingValue.text == '') {
+          setState(() {
+            _updateCurrentFirstOption(null);
+          });
           return const Iterable<SearchItemData>.empty();
         }
-        return dataList.where((SearchItemData option) {
+        return widget.dataList.where((SearchItemData option) {
           return option.name
               .toString()
               .startsWith(textEditingValue.text.toTitleCase());
         });
       },
       onSelected: (SearchItemData selection) {
+        _updateCurrentFirstOption(selection);
         Navigator.pushNamed(context, "/set_details", arguments: selection.url);
       },
       fieldViewBuilder: (BuildContext context,
           TextEditingController textEditingController,
           FocusNode focusNode,
           VoidCallback onFieldSubmitted) {
+        textEditingController.addListener(() {
+          setState(() {
+            _updateCurrentFirstOption(widget.currentFirstOption);
+          });
+        });
         return TextField(
           controller: textEditingController,
           focusNode: focusNode,
@@ -109,6 +139,7 @@ class AutoCompTest extends StatelessWidget {
       optionsViewBuilder: (BuildContext context,
           AutocompleteOnSelected<SearchItemData> onSelected,
           Iterable<SearchItemData> options) {
+        _updateCurrentFirstOption(options.first);
         return Align(
           alignment: Alignment.topLeft,
           child: Material(
