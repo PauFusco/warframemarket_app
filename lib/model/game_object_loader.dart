@@ -37,6 +37,7 @@ class SetItem {
   String imageURL;
   String itemURL;
   String? wikiLink;
+  int? amount;
   int tradingTax;
   int? masteryLevel;
   int? ducats;
@@ -60,6 +61,7 @@ class SetItem {
             : "https://warframe.market/static/assets/${itemJson["icon"]}"),
         itemURL = itemJson["url_name"],
         wikiLink = itemJson["en"]["wiki_link"],
+        amount = itemJson["quantity_for_set"],
         tradingTax = itemJson["trading_tax"],
         masteryLevel = itemJson["mastery_level"],
         ducats = itemJson["ducats"],

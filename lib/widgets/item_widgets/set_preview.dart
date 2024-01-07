@@ -36,13 +36,37 @@ class SetPreview extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             for (int i = 0; i < setData.components.length; i++)
-              ItemPreview(
-                itemURL: setData.components[i].imageURL,
-                size: 80,
-                opacity: 220,
-                isActive: (selectedItem == i + 1),
-                positionInList: i + 1,
-                updateState: updateState,
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  ItemPreview(
+                    itemURL: setData.components[i].imageURL,
+                    size: 80,
+                    opacity: 220,
+                    isActive: (selectedItem == i + 1),
+                    positionInList: i + 1,
+                    updateState: updateState,
+                  ),
+                  if (setData.components[i].amount != null &&
+                      setData.components[i].amount! > 1)
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 7, 16, 19),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            width: 2.8,
+                            color: const Color.fromARGB(255, 60, 135, 156)),
+                      ),
+                      child: Center(
+                        child: Text("x${setData.components[i].amount}",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400)),
+                      ),
+                    )
+                ],
               )
           ],
         ),
