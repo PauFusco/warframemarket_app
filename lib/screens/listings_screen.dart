@@ -122,27 +122,29 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     ],
                   ),
                 ),
-                ListView(
-                  children: [
-                    if (activeTab == 0)
-                      for (int i = 0; i < dataRequest.sellOrders.length; i++)
-                        ItemOrderBanner(
-                          order: dataRequest.sellOrders[i],
-                          width: screenSize.width,
-                          backColor: i % 2.0 == 0.0
-                              ? const Color.fromARGB(255, 23, 30, 33)
-                              : const Color.fromARGB(255, 16, 22, 25),
-                        )
-                    else if (activeTab == 1)
-                      for (int i = 0; i < dataRequest.buyOrders.length; i++)
-                        ItemOrderBanner(
-                          order: dataRequest.buyOrders[i],
-                          width: screenSize.width,
-                          backColor: i % 2.0 == 0.0
-                              ? const Color.fromARGB(255, 23, 30, 33)
-                              : const Color.fromARGB(255, 16, 22, 25),
-                        )
-                  ],
+                Expanded(
+                  child: ListView(
+                    children: [
+                      if (activeTab == 0)
+                        for (int i = 0; i < dataRequest.sellOrders.length; i++)
+                          ItemOrderBanner(
+                            order: dataRequest.sellOrders[i],
+                            width: screenSize.width,
+                            backColor: i % 2.0 == 0.0
+                                ? const Color.fromARGB(255, 23, 30, 33)
+                                : const Color.fromARGB(255, 16, 22, 25),
+                          )
+                      else if (activeTab == 1)
+                        for (int i = 0; i < dataRequest.buyOrders.length; i++)
+                          ItemOrderBanner(
+                            order: dataRequest.buyOrders[i],
+                            width: screenSize.width,
+                            backColor: i % 2.0 == 0.0
+                                ? const Color.fromARGB(255, 23, 30, 33)
+                                : const Color.fromARGB(255, 16, 22, 25),
+                          )
+                    ],
+                  ),
                 ),
               ],
             ),
