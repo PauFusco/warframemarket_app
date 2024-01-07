@@ -4,20 +4,33 @@ import 'package:http/http.dart' as http;
 class GenericSource {
   String id, type;
   String? name, sourceImageURL;
-  int? rate;
-  int? intact, exceptional, flawless, radiant;
+  double intact, exceptional, flawless, radiant;
 
   GenericSource()
       : id = "",
-        type = "";
+        type = "",
+        intact = -1.0,
+        exceptional = -1.0,
+        flawless = -1.0,
+        radiant = -1.0;
 
   GenericSource.fromJson(Map<String, dynamic> sourceJson)
       : id = sourceJson["relic"],
         type = sourceJson["type"],
-        intact = sourceJson["rates"]["intact"],
-        exceptional = sourceJson["rates"]["exceptional"],
-        flawless = sourceJson["rates"]["flawless"],
-        radiant = sourceJson["rates"]["radiant"];
+        intact = _parseDouble(sourceJson["rates"]["intact"]),
+        flawless = _parseDouble(sourceJson["rates"]["flawless"]),
+        exceptional = _parseDouble(sourceJson["rates"]["exceptional"]),
+        radiant = _parseDouble(sourceJson["rates"]["radiant"]);
+}
+
+double _parseDouble(dynamic val) {
+  if (val is double) {
+    return val;
+  } else if (val is int) {
+    return val + 0.0;
+  } else {
+    return -1.0;
+  }
 }
 
 class RelicSource extends GenericSource {
