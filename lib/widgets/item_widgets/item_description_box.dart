@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ItemDescription extends StatelessWidget {
-  const ItemDescription({
+class ItemDescriptionBox extends StatelessWidget {
+  const ItemDescriptionBox({
     super.key,
     required this.description,
   });

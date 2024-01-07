@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SearchItemData {
@@ -23,17 +21,4 @@ Future<List<SearchItemData>> loadItemsFromFile() async {
   }
 
   return itemsList;
-}
-
-class IamTesting
- extends StatelessWidget {
-  const IamTesting
-  ({super.key, required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(text);
-  }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_order_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
-import 'package:warframemarket_app/widgets/buy_sell_button.dart';
-import 'package:warframemarket_app/widgets/item_order_banner.dart';
+import 'package:warframemarket_app/widgets/buttons/buy_sell_button.dart';
+import 'package:warframemarket_app/widgets/list_widgets/item_order_banner.dart';
 
-class ListingsScreen extends StatefulWidget {
-  const ListingsScreen({super.key});
+class OrdersScreen extends StatefulWidget {
+  const OrdersScreen({super.key});
 
   @override
-  State<ListingsScreen> createState() => _ListingsScreenState();
+  State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-class _ListingsScreenState extends State<ListingsScreen> {
+class _OrdersScreenState extends State<OrdersScreen> {
   int activeTab = 0;
 
   void setActiveItem(int num) {

@@ -3,15 +3,15 @@ import 'package:warframemarket_app/model/game_object_loader.dart';
 import 'package:warframemarket_app/string_extension.dart';
 import 'package:warframemarket_app/url_launcher.dart';
 import 'package:warframemarket_app/widgets/background.dart';
-import 'package:warframemarket_app/widgets/custom_button.dart';
-import 'package:warframemarket_app/widgets/item_widgets/item_description.dart';
+import 'package:warframemarket_app/widgets/buttons/custom_button.dart';
+import 'package:warframemarket_app/widgets/item_widgets/item_description_box.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_preview.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_title.dart';
 import 'package:warframemarket_app/widgets/item_widgets/item_values_box.dart';
 import 'package:warframemarket_app/widgets/item_widgets/set_preview.dart';
 
-class SetDetailsScreen extends StatelessWidget {
-  const SetDetailsScreen({super.key});
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
                   setData: widget.dataRequest,
                   selectedItem: activeItem,
                   updateState: setActiveItem),
-              ItemDescription(
+              ItemDescriptionBox(
                   description: (activeItem == 0)
                       ? widget.dataRequest.set.itemDescription
                       : widget.dataRequest.components[activeItem - 1]
@@ -246,7 +246,7 @@ class ItemDetailsLayout extends StatelessWidget {
                 positionInList: 0,
                 updateState: null,
               ),
-              ItemDescription(description: dataRequest.itemDescription),
+              ItemDescriptionBox(description: dataRequest.itemDescription),
               ValuesBox(
                 masteryLevel: null,
                 ducats: null,

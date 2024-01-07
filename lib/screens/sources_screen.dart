@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warframemarket_app/model/item_source_loader.dart';
 import 'package:warframemarket_app/widgets/background.dart';
-import 'package:warframemarket_app/widgets/item_source_banner.dart';
+import 'package:warframemarket_app/widgets/list_widgets/item_source_banner.dart';
 
 class SourcesScreen extends StatefulWidget {
   const SourcesScreen({super.key});
@@ -25,9 +25,7 @@ class _SourcesScreenState extends State<SourcesScreen> {
         backgroundColor: const Color.fromARGB(255, 74, 100, 130),
       ),
       body: FutureBuilder(
-        future: loadAllSources(
-          itemToLoad!.toLowerCase().replaceAll(" ", "_"),
-        ),
+        future: loadAllSources(itemToLoad!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Stack(

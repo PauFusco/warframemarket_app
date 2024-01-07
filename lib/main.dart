@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:warframemarket_app/screens/listings_screen.dart';
+import 'package:warframemarket_app/screens/orders_screen.dart';
 import 'package:warframemarket_app/screens/search_screen.dart';
-import 'package:warframemarket_app/screens/set_details_screen.dart';
+import 'package:warframemarket_app/screens/details_screen.dart';
 import 'package:warframemarket_app/screens/sources_screen.dart';
-import 'package:warframemarket_app/widgets/item_list_provider.dart';
+import 'package:warframemarket_app/widgets/list_widgets/item_list_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           "/": (_) => const SearchScreen(),
-          "/set_details": (_) => const SetDetailsScreen(),
-          "/listings": (_) => const ListingsScreen(),
+          "/set_details": (_) => const DetailsScreen(),
+          "/listings": (_) => const OrdersScreen(),
           "/sources": (_) => const SourcesScreen(),
         },
         initialRoute: "/",
