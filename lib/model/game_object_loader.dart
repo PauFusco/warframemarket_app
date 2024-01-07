@@ -40,6 +40,7 @@ class SetItem {
   int tradingTax;
   int? masteryLevel;
   int? ducats;
+  bool isPrime;
 
   SetItem()
       : itemName = "ItemNotFound",
@@ -49,7 +50,8 @@ class SetItem {
         wikiLink = "https://warframe.fandom.com/wiki/WARFRAME_Wiki",
         tradingTax = -1,
         masteryLevel = -1,
-        ducats = -1;
+        ducats = -1,
+        isPrime = false;
   SetItem.fromJson(Map<String, dynamic> itemJson)
       : itemName = itemJson["en"]["item_name"],
         itemDescription = itemJson["en"]["description"],
@@ -60,7 +62,15 @@ class SetItem {
         wikiLink = itemJson["en"]["wiki_link"],
         tradingTax = itemJson["trading_tax"],
         masteryLevel = itemJson["mastery_level"],
-        ducats = itemJson["ducats"];
+        ducats = itemJson["ducats"],
+        isPrime = false {
+    for (var tag in itemJson["tags"]) {
+      if (tag == "prime") {
+        isPrime = true;
+        break;
+      }
+    }
+  }
 }
 
 class GenericSetData {

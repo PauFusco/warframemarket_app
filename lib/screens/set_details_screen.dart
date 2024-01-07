@@ -153,13 +153,15 @@ class _SetDetailsLayoutState extends State<SetDetailsLayout> {
               CustomButton(
                 text: "SOURCES",
                 function: (activeItem != 0)
-                    ? () {
-                        Navigator.pushNamed(context, "/sources",
-                            arguments: (activeItem == 0)
-                                ? widget.dataRequest.set.itemURL
-                                : widget.dataRequest.components[activeItem - 1]
-                                    .itemURL);
-                      }
+                    ? (widget.dataRequest.components[activeItem - 1].isPrime)
+                        ? () {
+                            Navigator.pushNamed(context, "/sources",
+                                arguments: (activeItem == 0)
+                                    ? widget.dataRequest.set.itemURL
+                                    : widget.dataRequest
+                                        .components[activeItem - 1].itemURL);
+                          }
+                        : null
                     : null,
               ),
             ],
@@ -258,11 +260,6 @@ class ItemDetailsLayout extends StatelessWidget {
                   Navigator.pushNamed(context, "/listings",
                       arguments: dataRequest.itemURL);
                 },
-              ),
-              const CustomButton(
-                text: "SOURCES",
-                //function: () {Navigator.pushNamed(context, "/sources", arguments: dataRequest.itemName);},
-                function: null,
               ),
             ],
           ),
