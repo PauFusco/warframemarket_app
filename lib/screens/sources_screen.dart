@@ -46,15 +46,14 @@ class _SourcesScreenState extends State<SourcesScreen> {
                 Container(
                   color: const Color.fromARGB(230, 17, 24, 27),
                 ),
-                Expanded(
-                    child: ListView(
+                ListView(
                   children: [
                     for (var relic in dataRequest.relics)
                       ItemSourceBanner(
                         source: relic,
                       ),
                   ],
-                ))
+                )
               ],
             ),
           );
