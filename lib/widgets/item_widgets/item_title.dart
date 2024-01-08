@@ -14,14 +14,19 @@ class ItemTitle extends StatelessWidget {
   Widget build(BuildContext context) {
 
     String shortSetName = fullSetName.split(" SET")[0];
-    String componentName = itemName.split(shortSetName)[1];
+
+    List<String> shortSetWords = shortSetName.split(" ");
+
+    String whitePart = itemName.split(shortSetWords.last)[0];
+    whitePart = whitePart + shortSetWords.last;
+    String bluePart = itemName.split(shortSetWords.last)[1];
 
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: shortSetName,
+            text: whitePart,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 40,
@@ -29,7 +34,7 @@ class ItemTitle extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: componentName,
+            text: bluePart,
             style: const TextStyle(
               color: Color.fromARGB(255, 27, 147, 178),
               fontSize: 40,
