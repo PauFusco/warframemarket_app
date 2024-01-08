@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class GenericSource {
   String id, type;
-  String? name, sourceImageURL;
+  String? name, sourceImageURL, sourceURL;
   double intact, exceptional, flawless, radiant;
 
   GenericSource()
@@ -35,7 +35,7 @@ double _parseDouble(dynamic val) {
 
 class RelicSource extends GenericSource {
   @override
-  String? name, sourceImageURL;
+  String? name, sourceImageURL, sourceURL;
   GenericSource sourceData;
   bool vaulted;
 
@@ -44,6 +44,7 @@ class RelicSource extends GenericSource {
       : name = itemJson["item_name"],
         sourceImageURL =
             "https://warframe.market/static/assets/${itemJson["thumb"]}",
+        sourceURL = itemJson["url_name"],
         sourceData = sourceDataToLoad,
         vaulted = itemJson["vaulted"];
 }
