@@ -9,6 +9,7 @@ This screen has a search bar that works with autocomplete, making the search of 
 
 ## Item
 Here is shown the item you searched and tells you important info about it, such as the items necessary to build it (if aplicable) and its cost. This also lets you access the individual parts' screen.
+You can also access the wiki of said item through a button on the top of the screen.
 
 It also gives you access to the other 2 screens.
 
@@ -17,3 +18,6 @@ This screen shows all the offers of the item and lets you sort them by the state
 
 ## Source
 This last screen shows you from which relic you can obtain the item (if aplicable).
+
+
+This project was made with the warframe.market API.
