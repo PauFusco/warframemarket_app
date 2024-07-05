@@ -1,14 +1,19 @@
-# warframemarket_app
+# warframe.market App
 
-## Getting Started
+This app serves as a way to acces the warframe.market API and information with your phone.
 
-This project is a starting point for a Flutter application.
+It consists of 4 different screens.
 
-A few resources to get you started if this is your first Flutter project:
+## Search
+This screen has a search bar that works with autocomplete, making the search of specific items easy
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Item
+Here is shown the item you searched and tells you important info about it, such as the items necessary to build it (if aplicable) and its cost. This also lets you access the individual parts' screen.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+It also gives you access to the other 2 screens.
+
+## Trade
+This screen shows all the offers of the item and lets you sort them by the state, price, etc.
+
+## Source
+This last screen shows you from which relic you can obtain the item (if aplicable).
